@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pipes width="1680" height="1050">
+	
+	<!-- Vegetation paths -->
+	<path creatures="greenScum" type = "pipe" bunchId="1">
+		<waypoint x="243" y="798" /> 
+		<waypoint x="272" y="813" /> 
+		<waypoint x="250" y="829" /> 
+		<waypoint x="270" y="778" /> 
+		<waypoint x="350" y="790" /> 
+		<waypoint x="315" y="830" /> 
+		<waypoint x="304" y="795" /> 
+		<waypoint x="305" y="769" /> 
+		<waypoint x="284" y="788" /> 
+		<waypoint x="287" y="814" /> 
+		<waypoint x="274" y="848" /> 
+		<waypoint x="254" y="845" /> 
+		<waypoint x="219" y="835" /> 
+		<waypoint x="219" y="820" /> 
+		<waypoint x="224" y="784" /> 
+		<waypoint x="243" y="878" /> 
+		<waypoint x="261" y="839" /> 
+		<waypoint x="254" y="806" /> 
+		<waypoint x="254" y="791" /> 
+		<waypoint x="317" y="802" /> 
+		<waypoint x="333" y="819" /> 
+		<waypoint x="330" y="874" /> 
+		<waypoint x="292" y="839" /> 
+		<waypoint x="289" y="823" /> 
+		<waypoint x="289" y="876" /> 
+		<waypoint x="276" y="901" /> 
+		<waypoint x="264" y="862" /> 
+		<waypoint x="210" y="860" /> 
+		<waypoint x="218" y="902" /> 
+		<waypoint x="251" y="910" /> 
+		<waypoint x="299" y="853" /> 
+		<waypoint x="298" y="814" /> 
+		<waypoint x="281" y="795" /> 
+		<waypoint x="285" y="757" /> 
+		<waypoint x="330" y="764" /> 
+		<waypoint x="328" y="783" /> 
+		<waypoint x="368" y="817" /> 
+		<waypoint x="354" y="757" /> 
+		<waypoint x="333" y="822" /> 
+		<waypoint x="333" y="849" /> 
+		<waypoint x="311" y="840" /> 
+		<waypoint x="312" y="910" /> 
+		<waypoint x="311" y="873" /> 
+		<waypoint x="233" y="857" /> 
+		<waypoint x="334" y="895" /> 
+		<waypoint x="352" y="840" /> 
+		<waypoint x="344" y="810" /> 
+		<waypoint x="387" y="779" /> 
+		<waypoint x="356" y="770" /> 
+		<waypoint x="363" y="862" /> 
+		<waypoint x="327" y="869" /> 
+		<waypoint x="397" y="814" /> 
+		<waypoint x="404" y="849" /> 
+		<waypoint x="384" y="906" /> 
+		<waypoint x="372" y="837" /> 
+		<waypoint x="431" y="774" /> 
+		<waypoint x="367" y="757" /> 
+		<waypoint x="427" y="863" /> 
+		<waypoint x="418" y="908" /> 
+		<waypoint x="371" y="929" /> 
+		<waypoint x="340" y="919" /> 
+		<waypoint x="305" y="954" /> 
+		<waypoint x="290" y="940" /> 
+		<waypoint x="280" y="930" /> 
+		<waypoint x="247" y="964" /> 
+	</path>
+	<path creatures="greenScum" type = "wall" >
+		<waypoint x="1418" y="295" /> 
+		<waypoint x="1418" y="340" /> 
+		<waypoint x="1462" y="294" /> 
+		<waypoint x="1440" y="304" /> 
+		<waypoint x="1397" y="316" /> 
+		<waypoint x="1414" y="260" /> 
+		<waypoint x="1444" y="272" /> 
+		<waypoint x="1391" y="275" /> 
+		<waypoint x="1425" y="386" /> 
+		<waypoint x="1467" y="344" /> 
+		<waypoint x="1432" y="350" /> 
+		<waypoint x="1388" y="365" /> 
+		<waypoint x="1361" y="327" /> 
+		<waypoint x="1363" y="275" /> 
+		<waypoint x="1408" y="219" /> 
+		<waypoint x="1444" y="234" /> 
+		<waypoint x="1479" y="275" /> 
+		<waypoint x="1479" y="309" /> 
+		<waypoint x="1428" y="328" /> 
+		<waypoint x="1353" y="251" /> 
+		<waypoint x="1317" y="347" /> 
+		<waypoint x="1345" y="402" /> 
+		<waypoint x="1365" y="366" /> 
+		<waypoint x="1313" y="304" /> 
+		<waypoint x="1306" y="255" /> 
+		<waypoint x="1331" y="279" /> 
+		<waypoint x="1356" y="220" /> 
+		<waypoint x="1384" y="233" /> 
+		<waypoint x="1322" y="226" /> 
+		<waypoint x="1298" y="346" /> 
+		<waypoint x="1384" y="412" /> 
+	</path>
+	<path creatures="fluffyMold">
+		<waypoint x="642" y="146" /> 
+		<waypoint x="622" y="170" /> 
+		<waypoint x="647" y="222" /> 
+		<waypoint x="663" y="179" /> 
+		<waypoint x="639" y="199" /> 
+		<waypoint x="599" y="209" /> 
+		<waypoint x="607" y="141" /> 
+		<waypoint x="704" y="144" /> 
+		<waypoint x="667" y="155" /> 
+		<waypoint x="652" y="114" /> 
+		<waypoint x="593" y="169" /> 
+		<waypoint x="701" y="190" /> 
+		<waypoint x="676" y="204" /> 
+		<waypoint x="636" y="252" /> 
+		<waypoint x="602" y="242" /> 
+		<waypoint x="567" y="209" /> 
+		<waypoint x="571" y="149" /> 
+		<waypoint x="636" y="89" /> 
+		<waypoint x="705" y="107" /> 
+		<waypoint x="604" y="95" /> 
+		<waypoint x="699" y="227" /> 
+		<waypoint x="727" y="164" /> 
+		<waypoint x="727" y="164" /> 
+		<waypoint x="684" y="117" /> 
+		<waypoint x="664" y="87" /> 
+		<waypoint x="617" y="114" /> 
+		<waypoint x="570" y="111" /> 
+		<waypoint x="570" y="173" /> 
+		<waypoint x="607" y="187" /> 
+		<waypoint x="587" y="133" /> 
+		<waypoint x="684" y="86" /> 
+		<waypoint x="717" y="129" /> 
+		<waypoint x="693" y="166" /> 
+		<waypoint x="658" y="136" /> 
+		<waypoint x="629" y="128" /> 
+		<waypoint x="1560" y="603" /> 
+		<waypoint x="1571" y="633" /> 
+		<waypoint x="1506" y="650" /> 
+		<waypoint x="1512" y="582" /> 
+		<waypoint x="1526" y="603" /> 
+		<waypoint x="1538" y="636" /> 
+		<waypoint x="1499" y="623" /> 
+		<waypoint x="1459" y="586" /> 
+		<waypoint x="1498" y="536" /> 
+		<waypoint x="1538" y="566" /> 
+		<waypoint x="1498" y="559" /> 
+		<waypoint x="1435" y="540" /> 
+		<waypoint x="1465" y="616" /> 
+		<waypoint x="1466" y="566" /> 
+		<waypoint x="1542" y="529" /> 
+		<waypoint x="1466" y="532" /> 
+		<waypoint x="1484" y="638" /> 
+		<waypoint x="1479" y="585" /> 
+		<waypoint x="1450" y="589" /> 
+		<waypoint x="1439" y="622" /> 
+		<waypoint x="1420" y="642" /> 
+		<waypoint x="1415" y="601" /> 
+		<waypoint x="1429" y="573" /> 
+		<waypoint x="1448" y="516" /> 
+		<waypoint x="1486" y="515" /> 
+		<waypoint x="1487" y="597" /> 
+		<waypoint x="1447" y="643" /> 
+		<waypoint x="1433" y="601" /> 
+		<waypoint x="1410" y="620" /> 
+		<waypoint x="1380" y="581" /> 
+		<waypoint x="1403" y="530" /> 
+		<waypoint x="1403" y="602" /> 
+		<waypoint x="1380" y="623" /> 
+		<waypoint x="1396" y="577" /> 
+		<waypoint x="1569" y="542" /> 
+		<waypoint x="1525" y="548" /> 
+		<waypoint x="1519" y="519" /> 
+		<waypoint x="1516" y="493" /> 
+		<waypoint x="1568" y="571" /> 
+		<waypoint x="1602" y="538" /> 
+		<waypoint x="1570" y="512" /> 
+		<waypoint x="1537" y="656" /> 
+		<waypoint x="1484" y="671" /> 
+		<waypoint x="1461" y="705" /> 
+		<waypoint x="1516" y="673" /> 
+		<waypoint x="1503" y="687" /> 
+		<waypoint x="1449" y="674" /> 
+		<waypoint x="1460" y="647" /> 
+		<waypoint x="1425" y="666" /> 
+		<waypoint x="1425" y="698" /> 
+		<waypoint x="1399" y="666" /> 
+		<waypoint x="1502" y="708" /> 
+		<waypoint x="1501" y="737" /> 
+		<waypoint x="1426" y="754" /> 
+		<waypoint x="1472" y="732" /> 
+		<waypoint x="1419" y="724" /> 
+	</path>
+	
+	<!-- Static stages of creatures -->
+	<path creatures="blueBug_s1">
+		<waypoint x="270" y="65" /> 
+		<waypoint x="251" y="75" /> 
+		<waypoint x="248" y="104" /> 
+		<waypoint x="232" y="97" /> 
+		<waypoint x="215" y="66" /> 
+		<waypoint x="211" y="111" /> 
+		<waypoint x="220" y="141" /> 
+		<waypoint x="245" y="166" /> 
+		<waypoint x="254" y="126" /> 
+		<waypoint x="232" y="121" /> 
+		<waypoint x="292" y="119" /> 
+		<waypoint x="271" y="86" /> 
+		<waypoint x="295" y="93" /> 
+		<waypoint x="332" y="101" /> 
+		<waypoint x="294" y="65" /> 
+		<waypoint x="319" y="82" />
+	</path>
+	<path creatures="blueBug_s3">
+		<waypoint x="1055" y="573" /> 
+		<waypoint x="1055" y="597" /> 
+		<waypoint x="1063" y="631" /> 
+		<waypoint x="1084" y="675" /> 
+		<waypoint x="1061" y="696" /> 
+		<waypoint x="1046" y="660" /> 
+		<waypoint x="1011" y="568" /> 
+		<waypoint x="1119" y="584" /> 
+		<waypoint x="1109" y="651" /> 
+		<waypoint x="1086" y="579" /> 
+		<waypoint x="971" y="606" /> 
+		<waypoint x="966" y="670" /> 
+		<waypoint x="974" y="541" /> 
+		<waypoint x="1033" y="500" /> 
+		<waypoint x="1063" y="526" /> 
+	</path>
+	<path creatures="greenBug_s1">
+		<waypoint x="625" y="463" /> 
+		<waypoint x="632" y="475" /> 
+		<waypoint x="675" y="442" /> 
+		<waypoint x="655" y="488" /> 
+		<waypoint x="654" y="569" /> 
+		<waypoint x="585" y="513" /> 
+		<waypoint x="643" y="515" /> 
+		<waypoint x="590" y="486" /> 
+		<waypoint x="650" y="409" /> 
+		<waypoint x="695" y="487" /> 
+		<waypoint x="584" y="421" /> 
+		<waypoint x="704" y="401" /> 
+		<waypoint x="612" y="501" /> 
+		<waypoint x="603" y="438" /> 
+		<waypoint x="720" y="447" /> 
+		<waypoint x="638" y="448" /> 
+		<waypoint x="694" y="529" /> 
+		<waypoint x="607" y="554" /> 
+		<waypoint x="574" y="454" /> 
+		<waypoint x="619" y="401" /> 
+		<waypoint x="651" y="546" /> 
+	</path>
+	
+	<!-- Dynamic stages of creatures -->
+	<path creatures="blueBug_s4" type="pipe" action="lay_egg">
+		<waypoint x="6" y="423" /> 
+		<waypoint x="209" y="176" key="in" /> 
+		<waypoint x="333" y="57" key="out" /> 
+		<waypoint x="405" y="8" /> 
+	</path>
+	<path creatures="blueBug_s4" type="pipe" action="feed_scum" bunchId="1">
+		<waypoint x="4" y="866" /> 
+		<waypoint x="176" y="860" key="in" /> 
+		<waypoint x="458" y="855" key="out"/> 
+		<waypoint x="1676" y="833" /> 
+	</path>
+	<path up="R" creatures="blueBug_s2,blueBug_s4" type="pipe" action="move">
+		<waypoint x="4" y="992" /> 
+		<waypoint x="1675" y="959" />
+	</path>
+	<path up="L" creatures="blueBug_s2,blueBug_s4" type="pipe" action="move">
+		<waypoint x="4" y="992" /> 
+		<waypoint x="1675" y="959" /> 
+		<waypoint x="4" y="741" /> 
+		<waypoint x="929" y="726" /> 
+		<waypoint x="951" y="688" /> 
+		<waypoint x="958" y="623" /> 
+		<waypoint x="955" y="560" /> 
+		<waypoint x="975" y="467" /> 
+		<waypoint x="969" y="4" /> 
+	</path>
+	<path up="L" creatures="blueBug_s2,blueBug_s4" type="pipe" action="move" > 
+		<waypoint x="1002" y="100" /> 
+		<waypoint x="1007" y="513" /> 
+		<waypoint x="1027" y="547" /> 
+		<waypoint x="1039" y="598" /> 
+		<waypoint x="1043" y="681" /> 
+		<waypoint x="1059" y="710" /> 
+		<waypoint x="1137" y="718" /> 
+		<waypoint x="1676" y="703" /> 
+	</path>
+	<path up="R" creatures="blueBug_s2,blueBug_s4" type="pipe" action="move" >
+		 <waypoint x="6" y="525" /> 
+		<waypoint x="40" y="501" /> 
+		<waypoint x="72" y="486" /> 
+		<waypoint x="103" y="461" /> 
+		<waypoint x="153" y="412" /> 
+		<waypoint x="166" y="356" /> 
+		<waypoint x="170" y="304" /> 
+		<waypoint x="201" y="267" /> 
+		<waypoint x="468" y="4" /> 
+	</path>
+	<path creatures="blueBug_s2,blueBug_s4" action="move" type="wall"  >
+		<waypoint x="868" y="1044" /> 
+		<waypoint x="1012" y="895" /> 
+		<waypoint x="1025" y="754" /> 
+		<waypoint x="901" y="631" /> 
+		<waypoint x="890" y="362" /> 
+		<waypoint x="924" y="260" /> 
+		<waypoint x="1056" y="127" /> 
+		<waypoint x="1160" y="16" />
+	</path>
+	<path creatures="blueBug_s2,blueBug_s4" action="move" type="wall"  >
+		<waypoint x="621" y="7" /> 
+		<waypoint x="576" y="122" /> 
+		<waypoint x="470" y="232" /> 
+		<waypoint x="210" y="347" /> 
+		<waypoint x="126" y="482" /> 
+		<waypoint x="71" y="676" /> 
+		<waypoint x="113" y="768" /> 
+		<waypoint x="46" y="1048" />
+	</path>
+	<path creatures="blueBug_s2,blueBug_s4" action="move" type="wall"  >
+		<waypoint x="8" y="357" /> 
+		<waypoint x="263" y="349" /> 
+		<waypoint x="549" y="361" /> 
+		<waypoint x="746" y="318" /> 
+		<waypoint x="1225" y="138" />
+	</path>
+	<path creatures="greenBug_s2" action="move">
+		<waypoint x="350" y="8" /> 
+		<waypoint x="577" y="289" /> 
+		<waypoint x="520" y="828" /> 
+		<waypoint x="416" y="1049" />
+	</path>
+	<path creatures="greenBug_s2" action="move">
+		<waypoint x="167" y="10" /> 
+		<waypoint x="271" y="367" /> 
+		<waypoint x="353" y="452" /> 
+		<waypoint x="503" y="412" /> 
+		<waypoint x="592" y="362" /> 
+		<waypoint x="765" y="315" /> 
+		<waypoint x="829" y="190" /> 
+		<waypoint x="895" y="87" /> 
+		<waypoint x="1110" y="8" /> 
+	</path>
+	<path creatures="greenBug_s2" action="move">
+		<waypoint x="751" y="6" /> 
+		<waypoint x="720" y="104" /> 
+		<waypoint x="729" y="229" /> 
+		<waypoint x="778" y="282" /> 
+		<waypoint x="870" y="296" /> 
+		<waypoint x="971" y="357" /> 
+		<waypoint x="1001" y="417" /> 
+		<waypoint x="1018" y="466" /> 
+		<waypoint x="1011" y="523" /> 
+		<waypoint x="976" y="572" /> 
+		<waypoint x="954" y="604" /> 
+		<waypoint x="896" y="672" /> 
+		<waypoint x="864" y="707" /> 
+		<waypoint x="769" y="798" /> 
+		<waypoint x="604" y="842" /> 
+		<waypoint x="470" y="859" /> 
+		<waypoint x="429" y="858" /> 
+		<waypoint x="330" y="886" /> 
+		<waypoint x="293" y="939" /> 
+		<waypoint x="311" y="1022" /> 
+		<waypoint x="347" y="1043" /> 
+	</path>
+	<path creatures="greenBug_s2" action="move">
+	 	<waypoint x="1551" y="1042" /> 
+		<waypoint x="1477" y="786" /> 
+		<waypoint x="1533" y="697" /> 
+		<waypoint x="1581" y="540" /> 
+		<waypoint x="1541" y="445" /> 
+		<waypoint x="1448" y="419" /> 
+		<waypoint x="1351" y="437" /> 
+		<waypoint x="1271" y="461" /> 
+		<waypoint x="1188" y="456" /> 
+		<waypoint x="1114" y="386" /> 
+		<waypoint x="1141" y="319" /> 
+		<waypoint x="1195" y="256" /> 
+		<waypoint x="1338" y="222" /> 
+		<waypoint x="1489" y="169" /> 
+		<waypoint x="1523" y="124" /> 
+		<waypoint x="1543" y="64" /> 
+		<waypoint x="1550" y="13" />
+	</path>
+	<path creatures="fuzzPredator_s1,fuzzPredator_s2" action="move">
+		<waypoint x="3" y="959" /> 
+		<waypoint x="961" y="1030" /> 
+		<waypoint x="1183" y="705" /> 
+		<waypoint x="953" y="574" /> 
+		<waypoint x="738" y="601" /> 
+		<waypoint x="372" y="569" /> 
+		<waypoint x="43" y="539" /> 
+		<waypoint x="3" y="524" /> 
+	</path>
+</pipes>

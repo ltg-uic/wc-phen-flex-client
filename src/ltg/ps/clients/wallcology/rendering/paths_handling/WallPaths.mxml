@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" >
+	
+	
+	<!-- ActionScript for events handling & data management-->
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.IViewCursor;
+			import mx.rpc.events.ResultEvent;
+			
+			// Pipes image original size
+			private var pipeW:int;
+			private var pipeH:int;
+			// Ready flag for data load
+			private var ready:Boolean = false;
+			// Path containers
+			private var fluffyMoldPaths:ArrayCollection = new ArrayCollection();
+			private var greenScumPaths:ArrayCollection = new ArrayCollection();
+			private var greenBug_s1Paths:ArrayCollection = new ArrayCollection();
+			private var greenBug_s2Paths:ArrayCollection = new ArrayCollection();
+			private var blueBug_s2Paths:ArrayCollection = new ArrayCollection();
+			private var blueBug_s3Paths:ArrayCollection = new ArrayCollection();
+			private var blueBug_s4Paths:ArrayCollection = new ArrayCollection();
+			private var fuzzPredator_s1Paths:ArrayCollection = new ArrayCollection();
+			private var fuzzPredator_s2Paths:ArrayCollection = new ArrayCollection();
+			// Are paths visible?
+			[Bindable]
+			public var hidePaths:Boolean;
+			
+			
+			/**
+			 * Called whenever the Paths are loaded.
+			 * Transforms the XML in useful information for the app
+			 * and initializes the visual representation of the paths.
+			 */
+			public function resultHandler(event:ResultEvent):void {
+				var path_data:XML = event.result as XML;
+				// Get height and width
+				pipeW = path_data.@width;
+				pipeH = path_data.@height;
+				var pathDataList:XMLList = path_data.path as XMLList;
+				var px:XML;
+				var path:CreaturePath;
+				// Iterate throught the paths and parse them
+				for each (px in pathDataList) {
+					path = new CreaturePath();
+					path.initializePath(px);
+					path.resize(width, pipeW, height, pipeH);
+					if(!hidePaths)
+						path.updateDisplay();
+					if (path.supportedCreatures.indexOf("fluffyMold")!=-1) {
+						fluffyMoldPaths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("greenScum")!=-1 && path.type=="wall") {
+						greenScumPaths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("greenBug_s1")!=-1) {
+						greenBug_s1Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("greenBug_s2")!=-1) {
+						greenBug_s2Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s2")!=-1 && path.type=="wall") {
+						blueBug_s2Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s3")!=-1) {
+						blueBug_s3Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s4")!=-1 && path.type=="wall") {
+						blueBug_s4Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("fuzzPredator_s1")!=-1) {
+						fuzzPredator_s1Paths.addItem(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("fuzzPredator_s2")!=-1) {
+						fuzzPredator_s2Paths.addItem(path);
+						addElement(path);
+					}
+				}
+				// Done initializing: mark as ready
+				ready = true;
+			}
+			
+			
+			
+			/**
+			 * Called whenever the pipes image is resized.
+			 */
+			public function resize(imgWidth:Number, imgHeigh:Number):void {
+				width = imgWidth;
+				height = imgHeigh;
+				if (ready) {
+					// Resize all paths in collection and update the display data
+					var path:CreaturePath;
+					for each (path in fluffyMoldPaths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in greenBug_s1Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in greenBug_s2Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in blueBug_s2Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in blueBug_s3Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in blueBug_s4Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in fuzzPredator_s1Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+					for each (path in fuzzPredator_s2Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						path.updateDisplay();
+					}
+				}
+			}
+			
+			
+			/**
+			 * Returns an array of all waypoints for satic creatures.
+			 * On Walls they are Fuzz, BlueBug_s3 and GreenBug_s1 
+			 */
+			public function getStaticCreatureWaypoints(type:String):Array {
+				var waypoints:Array = new Array();
+				if(type=="fluffyMold")
+					for(var i:int=0; i<fluffyMoldPaths.length; i++)
+						waypoints = waypoints.concat(fluffyMoldPaths[i].actualPath);
+				if(type=="greenScum")
+					for(i=0; i<greenScumPaths.length; i++)
+						waypoints = waypoints.concat(greenScumPaths[i].actualPath);
+				if(type=="greenBug_s1")
+					for(i=0; i<greenBug_s1Paths.length; i++)
+						waypoints = waypoints.concat(greenBug_s1Paths[i].actualPath);
+				if(type=="blueBug_s3")
+					for(i=0; i<blueBug_s3Paths.length; i++)
+						waypoints = waypoints.concat(blueBug_s3Paths[i].actualPath);
+				return waypoints;
+			}
+			
+			
+			/**
+			 * Returns an array of all waypoints in a path of a dynamic
+			 * creature.
+			 * On Walls they are: Blue bug s2, Blue bug s4, GreenBug s2, 
+			 * predator s1 and predator s2 
+			 */
+			public function getRandomDynamicPath(type:String):CreaturePath {
+				if(type=="blueBug_s2")
+					return blueBug_s2Paths[Math.random() * blueBug_s2Paths.length];
+				if(type=="blueBug_s4")
+					return blueBug_s4Paths[Math.random() * blueBug_s4Paths.length];
+				if(type=="greenBug_s2")
+					return greenBug_s2Paths[Math.random() * greenBug_s2Paths.length];
+				if(type=="fuzzPredator_s1")
+					return fuzzPredator_s1Paths[Math.random() * fuzzPredator_s1Paths.length];
+				if(type=="fuzzPredator_s2")
+					return fuzzPredator_s2Paths[Math.random() * fuzzPredator_s2Paths.length];
+				throw new Error("Non existing creature");
+			}	
+			
+			
+		]]>
+	</fx:Script>	
+</s:Group>
+

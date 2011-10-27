@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* CSS File for my website */
+
+body {
+	font-size:small;
+    font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEE;
+}
+
+h1 {
+	text-align: center; 
+}
+
+h2 {
+	text-align: center; 
+}
+
+.center {
+	text-align: center;
+}
+
+
+table {
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: #EEE;
+	margin: 10px;
+}
+th {
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: black;
+	background-color: #EEE;
+}
+td {
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: black;
+	background-color: #EEE;
+	text-align: center;
+}
+
+td.brown {
+	background-color: #A0522D;
+}
+
+td.pink {
+	background-color: #FFB6C1;
+}
+
+td.red {
+	background-color: #CC0000;
+}
+
+td.gray {
+	background-color: #3D3D3D;
+}
+
+td.green {
+	background-color: #00EE00;
+}
+
+td.yellow {
+	background-color: #FFFF00;
+}
+
+td.orange {
+	background-color: #FF6600;
+}
+
+td.blue {
+	background-color: #0000EE;
+}
+
+td.purple {
+	background-color: #9900CC;
+}

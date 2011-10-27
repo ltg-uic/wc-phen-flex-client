@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:assets="ltg.ps.clients.wallcology.assets.*"
+			   xmlns:rendering="ltg.ps.clients.wallcology.rendering.*"
+			   width="100%"
+			   height="100%"
+			   backgroundColor="#D3D3D3"
+			   frameRate="24"
+			   currentState="initializing"
+			   applicationComplete="initApp()" > 
+			   <!-- Note:this needs to be applicationComplete or
+			    	we won't be able to access the stage! -->
+	
+	
+	<!-- Styles -->
+	<fx:Style source="assets/fonts.css"/>
+	
+	
+	<!-- States --> 
+	<s:states>
+		<s:State name="initializing" />
+		<s:State name="connecting" enterState="enterConnecting()" />
+		<s:State name="rendering" enterState="enterRendering()" />
+	</s:states>
+	
+	
+	<!-- ActionScript for events handling-->
+	<fx:Script>
+		<![CDATA[
+			import ltg.ps.clients.commons.Phenomena;
+			import ltg.ps.clients.commons.XMPPController;
+			import ltg.ps.clients.wallcology.assets.buttons.HighBtnSkin;
+			import ltg.ps.clients.wallcology.model.WallcologyModel;
+			
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import mx.events.SliderEvent;
+			
+			import org.igniterealtime.xiff.events.DisconnectionEvent;
+			
+			// Modes
+//			public static 	var mode:String = "DEBUG";
+			public static 	var mode:String = "RELEASE";
+			
+			// Side panels
+			[Bindable]
+			private var BTN_WIDTH:Number = 25;
+			// Aspect ratio
+			[Bindable]
+			public var ar:String;
+			// Components
+			private var xmpp:XMPPController = null;
+			[Bindable]
+			private var wc:WallcologyModel = null;
+			
+			
+			/**
+			 * Initialiazes the components, performs the wiring
+			 * and then tries to connect to the server.
+			 */
+			private function initApp():void {
+				output.text = "Initializing WallCology...";
+				// Compute aspect ratio
+				ar = calculateScreenAspectRatio();
+				//Initialize WallCology
+				wc = new WallcologyModel();
+				// Initialize connection
+				xmpp = initializeConnection();
+				if (wc == null || xmpp == null)
+					return;
+				// Wiring
+				xmpp.setupMessageHanlder(wc.onUpdateReceived);
+				xmpp.setupDisconnectionHandler(disconnectionHandler);
+				wc.addEventListener(Phenomena.PHEN_INIT, onPhenInit);
+				wc.addEventListener(Phenomena.PHEN_UPDATE_DONE, onPhenUpdate);
+				wc.setWindowNumericId(xmpp.getUsername());
+				// Register FullScreen Handler
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, fullScreenhandler);
+				// Change state
+				setCurrentState("connecting");
+			}
+			
+			
+			/**
+			 * Entering the connecting state means that the connection procedure can start
+			 */
+			private function enterConnecting():void {
+				output.text = "WallScope is connecting...";
+				xmpp.connect();
+			}
+			
+			
+			/**
+			 * Once the phenomena has been initialized the rendering can start
+			 */
+			private function onPhenInit(event:Event = null):void {
+				fullScreenBtn.visible = true;
+				output.text = "WallScope is ready!";
+			}
+			
+			
+			/**
+			 * If the phenomena is in connecting state it means that it has been
+			 * disconnected and is trying to reconnect, therefore the same
+			 * operations of onPhenInit are required, otherwise no
+			 * action is needed
+			 */
+			private function onPhenUpdate(event:Event = null):void {
+				if (currentState == "connecting") {
+					fullScreenBtn.visible = true;
+					output.text = "WallScope is ready!";
+				}
+			}
+
+			
+			/**
+			 * Once you enter rendering the canvas is started up
+			 */	
+			private function enterRendering():void {
+				output.visible = false;
+			}
+			
+			
+			/**
+			 * Once a disconnection happens, the client goes back to connecting state
+			 */
+			private function disconnectionHandler(event:DisconnectionEvent):void {
+				fullScreenBtn.visible = false;
+				setCurrentState("connecting");
+			}
+			
+			
+			/**
+			 * Tests if the browser parameters are valid, if not defaults them
+			 */
+			private function initializeConnection():XMPPController {
+				var serverHost:String = ""; 
+				var username:String = ""; 
+				var password:String = ""; 
+				var phenomenaId:String = "";
+				var resource:String = "WallCologyStudentClient";
+				if (mode == "RELEASE") {
+					serverHost = this.parameters.host;
+					username = this.parameters.username;
+					password = this.parameters.password;
+					phenomenaId = this.parameters.pid;
+					if (serverHost=="" || username=="" || password=="" || phenomenaId=="" ||
+						serverHost==null || username==null || password==null || phenomenaId==null) {
+						output.text = "Impossible to parse URL parameters!";
+						return null;
+					}
+				}
+				if (mode=="DEBUG") {
+					serverHost = "ltg.evl.uic.edu";
+					
+					username = "wc1_w1@ltg.evl.uic.edu";
+					password = "wc1_w1";
+					phenomenaId = "wc1@ltg.evl.uic.edu";
+					
+//					username = "hr_dev_w1@ltg.evl.uic.edu";
+//					password = "hr_dev_w1";
+//					phenomenaId = "hr_dev@ltg.evl.uic.edu";
+				}
+				return new XMPPController(serverHost, username, password, resource, phenomenaId);
+			}
+			
+			
+			/**
+			 * Control side panels movement.
+			 */
+			private function movePanel(panel:Group):void {
+				//set target of move transition
+				panelMover.target = panel;	
+				panelMover.xFrom = panel.x;
+				if (panel.x.toFixed() == (BTN_WIDTH - instrumentsPanel.width).toFixed())
+					// Instrument panel from hidden to extended 
+					panelMover.xTo = -2;
+				else if (panel.x == -2)
+					// Instrument panel from extended to hidden
+					panelMover.xTo = BTN_WIDTH - instrumentsPanel.width;
+				//play transition
+				panelMover.play();
+			}
+			
+			
+			/**
+			 * Called whenever on of the three condition slideders are changed.
+			 * Does two things: notifies the phenomena server and starts a "graphic 
+			 * transition" from the current state to the updated state. 
+			 */
+			private function updateCondition(event:MouseEvent):void {
+				if(event.target==ltBtn) {
+					wc.setTemperature(WallcologyModel.LOW_TEMP);
+					xmpp.send("<editEnvironment variable=\"temperature\">"+ WallcologyModel.LOW_TEMP +"</editEnvironment>");
+				}
+				if(event.target==htBtn) {
+					wc.setTemperature(WallcologyModel.HIGH_TEMP);
+					xmpp.send("<editEnvironment variable=\"temperature\">"+ WallcologyModel.HIGH_TEMP +"</editEnvironment>");
+				}
+				if(event.target==llBtn) {
+					wc.setLight(WallcologyModel.LOW_LIGHT);
+					xmpp.send("<editEnvironment variable=\"light\">"+ WallcologyModel.LOW_LIGHT +"</editEnvironment>");
+				} 
+				if(event.target==hlBtn) {
+					wc.setLight(WallcologyModel.HIGH_LIGHT);
+					xmpp.send("<editEnvironment variable=\"light\">"+ WallcologyModel.HIGH_LIGHT +"</editEnvironment>");
+				} 
+				if(event.target==lhBtn) {
+					wc.setHumidity(WallcologyModel.LOW_HUMID);
+					xmpp.send("<editEnvironment variable=\"humidity\">"+ WallcologyModel.LOW_HUMID +"</editEnvironment>");
+				}
+				if(event.target==hhBtn) {
+					wc.setHumidity(WallcologyModel.HIGH_HUMID);
+					xmpp.send("<editEnvironment variable=\"humidity\">"+ WallcologyModel.HIGH_HUMID +"</editEnvironment>");
+				}
+			} 
+			
+			
+			
+			/**
+			 * Called whenever the fullscreen button is pressed. 
+			 */
+			private function fullScreenBtn_clickHandler(event:MouseEvent):void {
+				try {
+					// This triggeres a fullScreen event that is caught by fullScreenhandler
+					stage.displayState = StageDisplayState.FULL_SCREEN;
+				} catch (any:*) {
+					// ignore exceptions
+				}
+			}
+			
+			
+			/**
+			 * Called whenever the application enters or exits fullscreen
+			 */
+			private function fullScreenhandler(event:FullScreenEvent):void {
+				if(currentState=="connecting") {
+					setCurrentState("rendering");
+					if (canvas!=null)
+						canvas.resize();
+				}
+				if (event.fullScreen) {
+					fullScreenBtn.visible = false;
+					output.visible = false;
+					curtain.visible = false;
+					version.visible = false
+				} else {
+					fullScreenBtn.visible = true;
+					output.visible = true;
+					curtain.visible = true;
+					version.visible = true;
+				}
+			}
+			
+			
+			/**
+			 * Calculates the screen aspect ratio.
+			 */
+			private function calculateScreenAspectRatio():String {
+				if(Math.abs(Capabilities.screenResolutionX / Capabilities.screenResolutionY -1.333)  <= 0.001 ) {
+					return "4:3";
+				}
+				if(Math.abs(Capabilities.screenResolutionX / Capabilities.screenResolutionY - 1.6) <= 0.001) {
+					return "16:10";
+				}
+				if(Math.abs(Capabilities.screenResolutionX / Capabilities.screenResolutionY - 1.778) <= 0.001) {
+					return "16:9";
+				}
+				throw new Error("Your screen resolution is currently not supported!");				
+			}
+			
+			
+			/**
+			 * Function used to calculate if the buttons are supposed 
+			 * to be up or down, based on the model. 
+			 */
+			private function ace(og:Boolean):Boolean {
+				return wc.isControlEnabled && og;
+			}
+
+		]]>
+	</fx:Script>
+	
+	
+	<!-- Non-visual elements --> 
+	<fx:Declarations>
+		<mx:Move id="panelMover" />	
+	</fx:Declarations>
+	
+	
+	<!-- Graphic components -->
+	<rendering:WallcologyCanvas id="canvas" screen_ar="{ar}" model="@{wc}" includeIn="rendering" /> 
+	
+	<s:Group id="instrumentsPanel" height="635" width="208" top="20" x="{BTN_WIDTH - instrumentsPanel.width}" includeIn="rendering" >
+		<assets:instruments_panel height="100%" width="100%" />
+		<s:Label id="lightDisplay" text="{wc.light} lx" top="50" left="36" styleName="digital" />
+		<s:ToggleButton id="llBtn" label="LOW"  top="89" left="21"  enabled="{ace(hlBtn.selected)}" selected="{!wc.isLightHigh}" click="updateCondition(event)" skinClass="ltg.ps.clients.wallcology.assets.buttons.LowBtnSkin" />
+		<s:ToggleButton id="hlBtn" label="HIGH" top="89" left="128" enabled="{ace(llBtn.selected)}" selected="{wc.isLightHigh}" click="updateCondition(event)" skinClass="ltg.ps.clients.wallcology.assets.buttons.HighBtnSkin" />
+		<s:Label id="tempDisplay" text="{wc.temperature} C" top="158" left="36" styleName="digital" />
+		<s:ToggleButton id="ltBtn" label="LOW"  top="195" left="21"  enabled="{ace(htBtn.selected)}" selected="{!wc.isTempHigh}" click="updateCondition(event)" skinClass="ltg.ps.clients.wallcology.assets.buttons.LowBtnSkin" />
+		<s:ToggleButton id="htBtn" label="HIGH" top="195" left="128" enabled="{ace(ltBtn.selected)}" selected="{wc.isTempHigh}" click="updateCondition(event)" skinClass="ltg.ps.clients.wallcology.assets.buttons.HighBtnSkin" />
+		<s:Label id="humidityDisplay" text="{wc.humidity} %" top="264" left="36" styleName="digital" />	
+		<s:ToggleButton id="lhBtn" label="LOW"  top="303" left="21"  enabled="{ace(hhBtn.selected)}" selected="{!wc.isHumidHigh}" click="updateCondition(event)" skinClass="ltg.ps.clients.wallcology.assets.buttons.LowBtnSkin"  />
+		<s:ToggleButton id="hhBtn" label="HIGH" top="303" left="128" enabled="{ace(lhBtn.selected)}" selected="{wc.isHumidHigh}" click="updateCondition(event)"  skinClass="ltg.ps.clients.wallcology.assets.buttons.HighBtnSkin" />
+		<s:Label id="fuzzDisplay" text="{wc.fluffyMold} UNITS OF" top="393" left="44" styleName="digitalCreature" />
+		<s:Label id="scumDisplay" text="{wc.greenScum} UNITS OF" top="507" left="44" styleName="digitalCreature" />
+		<s:Button click="movePanel(instrumentsPanel)" right="0" top="90" height="112" width="20" alpha=".0"/>
+		<s:Button click="movePanel(instrumentsPanel)" right="0" top="490" height="112" width="20" alpha=".0"/>
+	</s:Group>
+	
+	<s:Group id="taggingPanel" includeIn="rendering" visible="{wc.isTaggingEnabled}" enabled="{wc.isTaggingEnabled}" bottom="0" horizontalCenter="0">
+		<s:Label text="Tagging Panel" />
+	</s:Group>
+	
+	<s:Label id="curtain" width="100%" height="100%" verticalCenter="0" horizontalCenter="0"  fontSize="20" fontWeight="bold" color="#708090" backgroundColor="#D3D3D3" />
+	
+	<s:Label id="version" text="1.R163" right="3" bottom="3" fontSize="10" color="#708090" />
+	
+	<s:Label id="output" verticalCenter="0" horizontalCenter="0"  fontSize="20" fontWeight="bold" color="#708090" backgroundColor="#D3D3D3" />
+	
+	<s:Button id="fullScreenBtn" visible="false" verticalCenter="40" horizontalCenter="0" label="Activate WallScope" click="fullScreenBtn_clickHandler(event)"/>
+</s:Application>

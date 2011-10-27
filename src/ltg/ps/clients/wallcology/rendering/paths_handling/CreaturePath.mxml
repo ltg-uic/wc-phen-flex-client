@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Path xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" >
+	
+	
+	<!-- ActionScript for events handling & data management-->
+	<fx:Script>
+		<![CDATA[
+			
+			// Path data / parameters
+			public var supportedCreatures:Array;
+			public var type:String;
+			public var up:String;
+			public var bunch:int = 0;
+			public var action:String;
+			public var inAction:int;
+			public var outAction:int;
+			//public var actionSpot:int; 
+			public var direction:String; 
+			private var originalData:Array  = new Array();
+			[Bindable]
+			public var actualPath:Array = new Array();
+			// Active waypoints... can't be taken anymore!
+			private var takenWaypoints:Array = new Array();
+			
+			
+			/**
+			 * Reads all the waypoints from XM and stores them.
+			 */
+			public function initializePath(xml:XML):void {
+				// Split creatures string...
+				var creatures:String = xml.@creatures;
+				supportedCreatures = creatures.split(",");
+				// Store other parameters (if present)
+				up = xml.@up;
+				type = xml.@type;
+				bunch = xml.@bunchId;
+				action = xml.@action;
+				// Assign a dicrection
+				direction = PathDirection.FORWARD;  // Need to substitute with FWD and BKWD
+//				if (Math.random()<.5)
+//					direction = PathDirection.FORWARD;
+//				else
+//					direction = PathDirection.BACKWARD;
+				// Iterate throught the wayPoints and store them
+				var waypointsList:XMLList = xml.waypoint as XMLList;
+				var waypoint:XML;
+				var i:int = 0;
+				for each (waypoint in waypointsList) {
+					if (bunch!=0) {
+						originalData.push(new PipeScumWaypoint(Number(waypoint.@x), Number(waypoint.@y), bunch));
+						actualPath.push(new PipeScumWaypoint(0, 0, bunch))
+					} else {
+						originalData.push(new Point(Number(waypoint.@x), Number(waypoint.@y)));
+						// Put fake data also on the actual data so we don't have NullPointerExceptions 
+						actualPath.push(new Point(0, 0));
+					}
+					// Identify action points
+					if (action!="move") {
+						if (waypoint.@key=="in") inAction = i;
+						if (waypoint.@key=="out") outAction = i;
+					}
+					i++;
+				}
+			}
+			
+			
+			
+			/**
+			 * Scales down the path to fit the current size of the application
+			 * and displays the points.
+			 */
+			public function resize(imgWidth:Number, pipesWidth:Number, imgHeight:Number, pipesHeight:Number):void {
+				var xRatio:Number = imgWidth / pipesWidth;
+				var yRatio:Number = imgHeight / pipesHeight;
+				// Scale all the waypoints
+				for(var i:int=0; i<originalData.length; i++) {
+					actualPath[i].x = originalData[i].x * xRatio;
+					actualPath[i].y = originalData[i].y * yRatio;
+				}
+			}
+			
+			
+			
+			/**
+			 * Transforms the actual points into the data string and sets it.
+			 */
+			public function updateDisplay():void{
+				var d:String = "M ";
+				if(supportedCreatures.indexOf("greenScum") != -1 || 
+					supportedCreatures.indexOf("fluffyMold") != -1) {
+					data = updateVegDisplay(d);
+				} else if (supportedCreatures.indexOf("blueBug_s1") != -1 || 
+							supportedCreatures.indexOf("blueBug_s3") != -1 ||
+							supportedCreatures.indexOf("greenBug_s1") != -1) {
+					data = updateStaticDisplay(d);
+				} else {
+					data = updateDynDisplay(d);
+				}
+			}
+			
+			
+			
+			/**
+			 * Updates data field of path for vegetation growth points.
+			 */
+			private function updateVegDisplay(d:String):String {
+				strokeColor.color = 0x00FF00;
+				return updateStaticDisplay(d);
+			}
+			
+			
+			
+			/**
+			 * Updates data field of path for eggs and pupa points.
+			 */
+			private function updateStaticDisplay(d:String):String {
+				stroke.weight = 4;
+				for(var i:int=0; i<actualPath.length;i++) {
+					var cur:Point = actualPath[i];
+					d += (cur.x-5) + " " + cur.y + " " + 
+						"L " + (cur.x+5) + " " + cur.y + " " + 
+						"M " + cur.x + " " + (cur.y-5) + " " + 
+						"L " + cur.x + " " + (cur.y+5) + " " + "M ";	
+				}
+				return d;
+			}
+			
+			
+			
+			/**
+			 * Updates data field of path for dynamic stages of creatures.
+			 */
+			private function updateDynDisplay(d:String):String {
+				var cur:Point = actualPath[0];
+				d += cur.x + " " + cur.y + " "
+				for(var i:int=1; i<actualPath.length;i++) {
+					cur = actualPath[i];
+					d += "L " + cur.x + " " + cur.y + " ";		
+				}
+				return d;
+			}
+			
+			
+			
+			/**
+			 * Returns the first waypoint index in a path
+			 */
+			public function getFirstWaypoint():int {
+				if (direction == PathDirection.FORWARD)
+					return 0;
+				else
+					return actualPath.length-1;
+			}
+			
+			
+			
+			/**
+			 * Returns a random (first) waypoint from the path.
+			 * This is used when positioning dynamic stages of creatures at startup.
+			 */
+			public function getRandomFirstWaypoint():int {
+				var i:int;
+				//do {
+					i = Math.random() * actualPath.length-1;
+				//} while (takenWaypoints.indexOf(i)==-1);
+				//takenWaypoints.push(i);
+				return i;
+			}
+			
+			
+			public function releaseWaypoint(wp:int):void {
+				var i:int = takenWaypoints.indexOf(wp);
+				for(i; i<takenWaypoints.length-1; i++) {
+					takenWaypoints[i] = takenWaypoints[i+1];
+				}
+			}
+			
+			
+			
+			/**
+			 * Returns the next waypoint based on the current one and the direction 
+			 * of travel of the path.
+			 */
+			public function getNextWaypoint(currentWaypoint:int):int {
+				if (direction == PathDirection.FORWARD) 
+					if (currentWaypoint < actualPath.length-1)
+						return currentWaypoint+1;
+					else
+						throw new EndOfPathError();
+				if (direction == PathDirection.BACKWARD)
+					if (currentWaypoint > 0)
+						return currentWaypoint-1;
+					else
+						throw new EndOfPathError();
+				throw new Error("Path direction is not valid.");
+			}
+			
+			
+			
+		]]>
+	</fx:Script>
+	
+	
+	<!-- Graphic components -->
+	<s:stroke >
+		<s:SolidColorStroke id="strokeColor" color="#FF0000" weight="2" />
+	</s:stroke>
+</s:Path>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" >
+	
+	
+	<!-- ActionScript for events handling & data management-->
+	<fx:Script>
+		<![CDATA[
+			import ltg.ps.clients.wallcology.rendering.creatures.Creature;
+			import ltg.ps.clients.wallcology.rendering.creatures.PipeVegetation;
+			
+			import mx.collections.ArrayCollection;
+			import mx.collections.IViewCursor;
+			import mx.rpc.events.ResultEvent;
+			
+			// Pipes image original size
+			private var pipeW:int;
+			private var pipeH:int;
+			// Ready flag for data load
+			private var ready:Boolean = false;
+			// Path containers
+			private var greenScumPaths:Array = new Array();
+			private var blueBug_s1Paths:Array = new Array();
+			private var blueBug_s2Paths:Array = new Array();
+			private var blueBug_s4Paths:Array = new Array();
+			// Are paths visible?
+			[Bindable]
+			public var hidePaths:Boolean;
+			
+			
+			/**
+			 * Called whenever the Paths are loaded.
+			 * Transforms the XML in useful information for the app
+			 * and initializes the visual representation of the paths.
+			 */
+			public function resultHandler(event:ResultEvent):void {
+				var path_data:XML = event.result as XML;
+				// Get height and width
+				pipeW = path_data.@width;
+				pipeH = path_data.@height;
+				var pathDataList:XMLList = path_data.path as XMLList;
+				var px:XML;
+				var path:CreaturePath;
+				// Iterate throught the paths and parse them
+				for each (px in pathDataList) {
+					path = new CreaturePath();
+					path.initializePath(px);
+					path.resize(width, pipeW, height, pipeH);
+					if(!hidePaths)
+						path.updateDisplay();
+					if (path.supportedCreatures.indexOf("greenScum")!=-1 && path.type=="pipe") {
+						greenScumPaths.push(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s1")!=-1) {
+						blueBug_s1Paths.push(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s2")!=-1 && path.type=="pipe") {
+						blueBug_s2Paths.push(path);
+						addElement(path);
+					}
+					if (path.supportedCreatures.indexOf("blueBug_s4")!=-1 && path.type=="pipe") {
+						blueBug_s4Paths.push(path);
+						addElement(path);
+					}
+				}
+				// Done initializing: mark as ready
+				ready = true;
+			}
+			
+			
+			
+			/**
+			 * Called whenever the pipes image is resized.
+			 */
+			public function resize(imgWidth:Number, imgHeigh:Number):void {
+				width = imgWidth;
+				height = imgHeigh;
+				if (ready) {
+					// Resize all paths in all the collections and update the display data
+					var path:CreaturePath;
+					for each (path in greenScumPaths) {
+						path.resize(width, pipeW, height, pipeH);
+						if(!hidePaths)
+							path.updateDisplay();
+					}
+					for each (path in blueBug_s1Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						if(!hidePaths)
+							path.updateDisplay();
+					}
+					for each (path in blueBug_s2Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						if(!hidePaths)
+							path.updateDisplay();
+					}
+					for each (path in blueBug_s4Paths) {
+						path.resize(width, pipeW, height, pipeH);
+						if(!hidePaths)
+							path.updateDisplay();
+					}
+				}
+			}
+			
+			
+			/**
+			 * Returns all the paths (containing waypoints)
+			 * for the scum on the walls
+			 */
+			public function getScumWaypoints():Array {
+				var waypoints:Array = new Array();
+				for(var i:int=0; i<greenScumPaths.length; i++)
+					waypoints = waypoints.concat(greenScumPaths[i].actualPath);
+				return waypoints;
+			}
+			
+			
+			/**
+			 * Returns an array of all waypoints for blue bug eggs on the pipes.
+			 */
+			public function getBlueBugEggsWaypoints():Array {
+				var waypoints:Array = new Array();
+				for(var i:int=0; i<blueBug_s1Paths.length; i++)
+					waypoints = waypoints.concat(blueBug_s1Paths[i].actualPath);
+				return waypoints;
+			}
+			
+			
+			/**
+			 * Returns an array of all waypoints in a path of a dynamic
+			 * creature.
+			 * On Pipes they are: Blue bug s2, Blue bug s4
+			 */
+			public function getRandomDynamicPath(type:String):CreaturePath {
+				var cp:CreaturePath;
+				if(type=="blueBug_s2") {
+					do {
+						cp = blueBug_s2Paths[(int)(Math.random() * blueBug_s2Paths.length)]
+					} while (cp.action!="move");
+					return cp;
+				}
+				if(type=="blueBug_s4") {
+					do {
+						cp = blueBug_s4Paths[(int)(Math.random() * blueBug_s4Paths.length)];
+					} while (cp.action!="move");
+					return cp;
+				}
+				throw new Error("Non existing creature");
+			}
+			
+			
+			public function getFeedingPath(bunchId:int):CreaturePath {
+				for each (var cp:CreaturePath in blueBug_s4Paths) {
+					if (cp.action == "feed_scum" && cp.bunch == bunchId) return cp;
+				}
+				throw new Error("Impossible to find a feeding path for Adult Blue Bugs on pipes");
+			}
+			
+			
+			public function getReproductionPath():CreaturePath {
+				for each (var cp:CreaturePath in blueBug_s4Paths) 
+					if (cp.action == "lay_egg") return cp;
+				throw new Error("Impossible to find a reproduction path for Adult Blue Bugs on pipes");
+			}
+			
+			
+		]]>
+	</fx:Script>	
+</s:Group>
+

@@ -1,0 +1,25 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+@font-face {
+	src:url("../assets/fonts/digital7_mono.ttf");
+	font-family:"Digital7";
+}
+
+s|Label.digital
+{
+	fontFamily: Digital7;
+	fontSize: 46;
+	color: #4195FF;
+}
+
+s|Label.digitalCreature
+{
+	fontFamily: Digital7;
+	fontSize: 20;
+	color: #FFFFFF;
+}
+	
+
+

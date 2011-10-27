@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Image waypoint finder</title>
+</head>
+<body style="margin: 10px; ">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+	function point_it(event){
+		pos_x = event.pageX - 10;
+		pos_y = event.pageY - 10;
+		//alert(pos_x + ", " + pos_y);
+		document.getElementById("cross").style.left = (pos_x-2) + "px" ;
+		document.getElementById("cross").style.top = (pos_y-17) + "px" ;
+		document.getElementById("cross").style.visibility = "visible" ;
+		document.getElementById('outCoord').value += '<waypoint x="' + pos_x + '" y="' + pos_y + '" /> \n';
+		//make a pixel (5X5) at mouse position
+		pointer = $('<span>').css({
+			'position':'absolute',
+			'background-color':'#ff0000',
+			'width':'5px',
+			'height':'5px',
+			'left': pos_x+5,
+			'top': pos_y+7 ,
+			'z-index':'300'
+		});
+		//append it to body
+		$(document.body).append(pointer);
+	}
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		// Set image div size
+		var dw = $('#pipes_img').width();
+		var dh = $('#pipes_img').height();
+		$('#pointer_div').width(dw);
+		$('#pointer_div').height(dh);
+		$('#outCoord').offset({ top: dh+20, left: 10 })
+	});
+	</script>
+	<form action="" name="pointform" method="post" >
+		<div style="position: absolute; z-index:100"> <img src="../bitmaps/ratio_16:10/Walls_2011__002.png" alt="Background"/></div> 
+		<div style="position: absolute; z-index:150" id="pipes_img"><img src="../bitmaps/ratio_16:10/Pipes_2_2011.png" alt="Pipes"/></div>
+		<div style="position: absolute; z-index:200;" id="pointer_div"  onclick="point_it(event)" >
+			<img alt="point.gif" src="point.gif" id="cross" style="position:absolute; visibility:hidden; z-index:250;">
+		</div>
+	</form> 
+	<textarea cols="50" rows="200" id="outCoord" style="position:absolute;"></textarea>
+</body>
+</html>
