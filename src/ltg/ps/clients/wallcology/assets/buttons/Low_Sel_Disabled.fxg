@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Graphic xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:fc="http://ns.adobe.com/flashcatalyst/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns="http://ns.adobe.com/fxg/2008" xmlns:flm="http://ns.adobe.com/flame/2008" version="2.0">
-	<Path alpha="0.33" blendMode="multiply" winding="nonZero" d:userLabel="Path Low" x="0.917" y="0.256" data="M 39 0 L 0.042 0 C 0.042 0 0 8.146 0 12.164 C 0 16.182 0 21 8.379 21 L 39 21 L 39 0 Z">
-		<fill>
-			<SolidColor alpha="0.8" color="#44AADF"/>
-		</fill>
-	</Path>
 	<Path alpha="0.6" blendMode="multiply" winding="nonZero" d:id="18" d:userLabel="Path Low" flm:variant="4" x="0.917" y="0.256" data="M 39 0 L 0.042 0 C 0.042 0 0 8.146 0 12.164 C 0 16.182 0 21 8.379 21 L 39 21 L 39 0 Z">
 		<fill>
 			<LinearGradient rotation="270" scaleX="21" x="19.5" y="21">
@@ -24,9 +19,14 @@
 			</LinearGradient>
 		</fill>
 	</Path>
-	<Path alpha="0.47" blendMode="screen" winding="nonZero" x="38.752" y="0.818" data="M 0 0 L 2.331 0 L 2.331 20.926 L 0 20.926 L 0 0 Z">
+	<Path alpha="0.65" blendMode="multiply" winding="nonZero" d:userLabel="Path Low" x="0.917" y="0.256" data="M 39 0 L 0.042 0 C 0.042 0 0 8.146 0 12.164 C 0 16.182 0 21 8.379 21 L 39 21 L 39 0 Z">
 		<fill>
-			<LinearGradient scaleX="7.45435" x="-5.19" y="10.463">
+			<SolidColor alpha="0.8" color="#44AADF"/>
+		</fill>
+	</Path>
+	<Path alpha="0.47" blendMode="screen" winding="nonZero" x="38.752" y="0.818" data="M 0 0 L 2.33 0 L 2.33 20.926 L 0 20.926 L 0 0 Z">
+		<fill>
+			<LinearGradient scaleX="7.45115" x="-5.188" y="10.463">
 				<GradientEntry color="#FFFFFF" ratio="0"/>
 				<GradientEntry ratio="1"/>
 			</LinearGradient>
