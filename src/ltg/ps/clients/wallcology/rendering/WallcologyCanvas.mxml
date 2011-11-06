@@ -492,8 +492,8 @@
 				model.addEventListener(ModelChangedEvent.BB_KILL_LARVA_EVENT, killBlueBugLarvaHandler);
 				model.addEventListener(ModelChangedEvent.BB_PUPATE_EVENT, pupateBlueBugHandler);
 				model.addEventListener(ModelChangedEvent.BB_SPLIT_EVENT, splitBlueBugCocoon);
-				//model.addEventListener(ModelChangedEvent.BB_ADD_ADULT_EVENT, addBlueBugAdultHandler);
-				//model.addEventListener(ModelChangedEvent.BB_DIE_EVENT, killBlueBugAdultHandler);
+				model.addEventListener(ModelChangedEvent.BB_ADD_ADULT_EVENT, addBlueBugAdultHandler);
+				model.addEventListener(ModelChangedEvent.BB_DIE_EVENT, killBlueBugAdultHandler);
 				// Fuzz eaters (green bugs)
 				model.addEventListener(ModelChangedEvent.GB_LAYEGG_EVENT, layGreenBugEggHandler);
 				model.addEventListener(ModelChangedEvent.GB_HATCH_EVENT, hatchGreenBugEggHandler);
@@ -816,13 +816,19 @@
 		
 			
 			protected function addBlueBugAdultHandler (event:ModelChangedEvent):void {
-				trace("Adding " + event.quantity + " blue bug adult");
-				// TODO
+				for(var i:int=0; i<event.quantity; i++) {
+					if (Math.random()<0.5)
+						addBlueBugAdult(Location.PIPES, Location.OUTSIDE_WALLSCOPE);
+					else 
+						addBlueBugAdult(Location.WALL, Location.OUTSIDE_WALLSCOPE);
+				}
 			}	
 			
 			protected function killBlueBugAdultHandler(event:ModelChangedEvent):void {
-				trace("Killing " + event.quantity + " blue bug adult");
-				// TODO
+				for(var i:int=0; i<event.quantity; i++) {
+					var c:MobileCreature = blueBug_s4s.pop();
+					c.isZombie = true;
+				}
 			}
 			
 			
