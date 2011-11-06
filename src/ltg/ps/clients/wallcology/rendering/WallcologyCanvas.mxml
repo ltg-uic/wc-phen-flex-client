@@ -389,19 +389,7 @@
 				}
 				//------------------- Adults on walls
 				for(i=0;i<greenBug_s2N; i++) {
-					myMC = new GreenBugAdultWalking() as MovieClip;
-					myUIC = new MobileCreature();
-					myUIC.mc = myMC;
-					myUIC.addChild(myMC);	
-					myUIC.type = CreatureType.GB2;
-					myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
-					wallDynamic.addElement(myUIC);
-					MobileCreature(myUIC).currentPath = (CreaturePath) (wallPaths.getRandomDynamicPath("greenBug_s2"));
-					MobileCreature(myUIC).location = Location.WALL;
-					MobileCreature(myUIC).initializeCreature(Location.INSIDE_WALLSCOPE);
-					MobileCreature(myUIC).buildMovement();
-					greenBug_s2s.push(myUIC);
-					
+					addGreenBugAdult(Location.INSIDE_WALLSCOPE);
 				}
 			}
 			
@@ -497,8 +485,8 @@
 				// Fuzz eaters (green bugs)
 				model.addEventListener(ModelChangedEvent.GB_LAYEGG_EVENT, layGreenBugEggHandler);
 				model.addEventListener(ModelChangedEvent.GB_HATCH_EVENT, hatchGreenBugEggHandler);
-				//model.addEventListener(ModelChangedEvent.GB_ADD_ADULT_EVENT, addGreenBugAdultHandler);
-				//model.addEventListener(ModelChangedEvent.GB_DIE_EVENT, killGreenBugHandler);
+				model.addEventListener(ModelChangedEvent.GB_ADD_ADULT_EVENT, addGreenBugAdultHandler);
+				model.addEventListener(ModelChangedEvent.GB_DIE_EVENT, killGreenBugHandler);
 				// Predator
 				//model.addEventListener(ModelChangedEvent.P_S1_GEN_EVENT, addBabyPredatorHandler);
 				//model.addEventListener(ModelChangedEvent.P_S1_DIE_EVENT, killBabyPredatorHandler);
@@ -871,22 +859,19 @@
 			}
 			
 			
-			
-			
 			protected function addGreenBugAdultHandler(event:ModelChangedEvent):void {
-				trace("Adding " + event.quantity + " adult green bug");
-				//TODO
+				trace("Adding " + event.quantity + " adult green bugs");
+				for(var i:int=0; i<event.quantity; i++) {
+					addGreenBugAdult(Location.OUTSIDE_WALLSCOPE);
+				}
 			}
+			
 			
 			protected function killGreenBugHandler(event:ModelChangedEvent):void {
-				trace("Killing " + event.quantity + " adult green bug");
-				//TODO
-			}
-			
-			
-			protected function eatGreenBugHandler(event:ModelChangedEvent):void {
-				trace("Eating " + event.quantity + " green bug cocoons");
-				// TODO
+				for(var i:int=0; i<event.quantity; i++) {
+					var c:MobileCreature = greenBug_s2s.pop();
+					c.isZombie = true;
+				}
 			}
 			
 			
@@ -948,11 +933,6 @@
 			}
 			
 			
-			private function removeBlueBugLarva(location:String):void {
-				
-			}
-			
-			
 			private function addBlueBugAdult(location:String, origin:String):void {
 				var myMC:MovieClip;
 				var myUIC:Creature;
@@ -977,6 +957,25 @@
 				MobileCreature(myUIC).initializeCreature(origin);
 				MobileCreature(myUIC).buildMovement();
 				blueBug_s4s.push(myUIC);
+			}
+			
+			
+			private function addGreenBugAdult(origin:String):void {
+				var myMC:MovieClip;
+				var myUIC:Creature;
+				myMC = new GreenBugAdultWalking() as MovieClip;
+				myUIC = new MobileCreature();
+				myUIC.mc = myMC;
+				myUIC.addChild(myMC);	
+				myUIC.type = CreatureType.GB2;
+				myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
+				myUIC.addEventListener(DisposeCreatureEvent.DISPOSE_CREATURE_EVENT, disposeCreatureHandler);
+				wallDynamic.addElement(myUIC);
+				MobileCreature(myUIC).currentPath = (CreaturePath) (wallPaths.getRandomDynamicPath("greenBug_s2"));
+				MobileCreature(myUIC).location = Location.WALL;
+				MobileCreature(myUIC).initializeCreature(origin);
+				MobileCreature(myUIC).buildMovement();
+				greenBug_s2s.push(myUIC);
 			}
 			
 			
