@@ -44,8 +44,8 @@
 			public static	const DEBUG:String = "DEBUG";
 			public static	const RELEASE:String = "RELEASE";
 			// Mode
-			public static 	var mode:String = "DEBUG";
-//			public static 	var mode:String = "RELEASE";
+//			public static 	var mode:String = DEBUG;
+			public static 	var mode:String = RELEASE;
 			
 			// Side panels
 			[Bindable]
@@ -158,13 +158,13 @@
 				if (mode=="DEBUG") {
 					serverHost = "ltg.evl.uic.edu";
 					
-//					username = "wc1_w1@ltg.evl.uic.edu";
-//					password = "wc1_w1";
-//					phenomenaId = "wc1@ltg.evl.uic.edu";
+					username = "wc1_w1@ltg.evl.uic.edu";
+					password = "wc1_w1";
+					phenomenaId = "wc1@ltg.evl.uic.edu";
 					
-					username = "hr_dev_w1@ltg.evl.uic.edu";
-					password = "hr_dev_w1";
-					phenomenaId = "hr_dev@ltg.evl.uic.edu";
+//					username = "hr_dev_w1@ltg.evl.uic.edu";
+//					password = "hr_dev_w1";
+//					phenomenaId = "hr_dev@ltg.evl.uic.edu";
 				}
 				return new XMPPController(serverHost, username, password, resource, phenomenaId);
 			}
@@ -319,7 +319,7 @@
 	
 	<s:Label id="curtain" width="100%" height="100%" verticalCenter="0" horizontalCenter="0"  fontSize="20" fontWeight="bold" color="#708090" backgroundColor="#D3D3D3" />
 	
-	<s:Label id="version" text="1.4" right="3" bottom="3" fontSize="10" color="#708090" />
+	<s:Label id="version" text="1.5" right="3" bottom="3" fontSize="10" color="#708090" />
 	
 	<s:Label id="output" verticalCenter="0" horizontalCenter="0"  fontSize="20" fontWeight="bold" color="#708090" backgroundColor="#D3D3D3" />
 	

@@ -498,17 +498,32 @@
 			protected function printCreaturesNumbers(event:ModelChangedEvent=null):void {
 				var visibleScum:int = 0;
 				var visibleFuzz:int = 0;
+				var visibleBB1:int = 0;
+				var visibleBB3:int = 0;
+				var visibleGB1:int = 0;
 				for (var i:int=0; i<greenScumsPipes.length; i++) 
 					if (greenScumsPipes[i].visible == true)
 						visibleScum++;
 				for (i=0; i<greenScumsWalls.length; i++) 
 					if (greenScumsWalls[i].visible == true)
 						visibleScum++;
-				for (var j:int=0; j<fluffyMolds.length; j++) 
-					if (fluffyMolds[j].visible == true)
+				for (i=0; i<fluffyMolds.length; i++) 
+					if (fluffyMolds[i].visible == true)
 						visibleFuzz++;
+				for (i=0; i<blueBug_s1s.length; i++)
+					if (blueBug_s1s[i].visible == true)
+						visibleBB1++;
+				for (i=0; i<blueBug_s3s.length; i++)
+					if (blueBug_s3s[i].visible == true)
+						visibleBB3++;
+				for (i=0; i<greenBug_s1s.length; i++)
+					if (greenBug_s1s[i].visible == true)
+						visibleGB1++;
 				trace("Scum M=" +  model.greenScum + " A=" + visibleScum);
 				trace("Fuzz M=" +  model.fluffyMold + " A=" + visibleFuzz);
+				trace("BlueB M=" + model.blueBug_s1+"/"+model.blueBug_s2+"/"+model.blueBug_s3+"/"+model.blueBug_s4 + " A=" +
+					visibleBB1+"/"+blueBug_s2s.length+"/"+visibleBB3+"/"+blueBug_s4s.length);
+				trace("GreenB M=" + model.greenBug_s1+"/"+model.greenBug_s2 + " A=" + visibleGB1+"/"+greenBug_s2s.length);
 			}
 			
 			
@@ -780,7 +795,7 @@
 						trace("ERROR: trying to pupate too many blue bug larva!");
 						return;
 					}
-					adult.pupate(pupa);					
+					adult.pupate(pupa);
 				}
 			}
 			
@@ -791,14 +806,18 @@
 			 */
 			protected function splitBlueBugCocoon(event:ModelChangedEvent):void {
 				for(var i:int=0; i<event.quantity; i++) {
-					var c:Creature;
-					try {
-						c = getRandomPupa(true);	
-					} catch (ae:ArgumentError) {
-						trace("ERROR: trying to split too many blue bug pupas!");
-						return;
+					if(model.fuzzPredator_s2!=0 && Math.random()) {
+						// The cocoon is eaten by the predator
+					} else {
+						var c:Creature;
+						try {
+							c = getRandomPupa(true);	
+						} catch (ae:ArgumentError) {
+							trace("ERROR: trying to split too many blue bug pupas!");
+							return;
+						}
+						c.splitPupa(getDisposableAdultBlueBug(Location.WALL, c.x, c.y, .5, .5, 0, true));
 					}
-					c.splitPupa(getDisposableAdultBlueBug(Location.WALL, c.x, c.y, .5, .5, 0, true));					
 				}
 			}
 		
@@ -847,20 +866,23 @@
 			 */
 			protected function hatchGreenBugEggHandler(event:ModelChangedEvent):void {
 				for(var i:int=0; i<event.quantity; i++) {
-					var c:Creature;
-					try {
-						c = getRandomGreenBugEgg(true);
-					} catch (ae:ArgumentError) {
-						trace("ERROR: trying to hatch too many green bug eggs!");
-						return;
+					if(model.fuzzPredator_s2!=0 && Math.random()) {
+						// Eaten by the predator
+					} else {
+						var c:Creature;
+						try {
+							c = getRandomGreenBugEgg(true);
+						} catch (ae:ArgumentError) {
+							trace("ERROR: trying to hatch too many green bug eggs!");
+							return;
+						}
+						c.hatchGreenBugEgg(getDisposableGreenBugAdult(c.x, c.y, .5, .5, 0, true));					
 					}
-					c.hatchGreenBugEgg(getDisposableGreenBugAdult(c.x, c.y, .5, .5, 0, true));					
 				}
 			}
 			
 			
 			protected function addGreenBugAdultHandler(event:ModelChangedEvent):void {
-				trace("Adding " + event.quantity + " adult green bugs");
 				for(var i:int=0; i<event.quantity; i++) {
 					addGreenBugAdult(Location.OUTSIDE_WALLSCOPE);
 				}
