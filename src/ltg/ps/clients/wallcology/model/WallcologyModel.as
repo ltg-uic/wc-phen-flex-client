@@ -136,14 +136,13 @@ package ltg.ps.clients.wallcology.model {
 			var dGB_s1:int = tmpGreenBug_s1 - greenBug_s1;
 			if (dGB_s1 > 0)
 				dispatchEvent(new ModelChangedEvent(ModelChangedEvent.GB_LAYEGG_EVENT, dGB_s1));
-			else if (dGB_s1 < 0) {
+			else if (dGB_s1 < 0)
 				dispatchEvent(new ModelChangedEvent(ModelChangedEvent.GB_HATCH_EVENT, -dGB_s1));
 			var dGB_s2:int = tmpGreenBug_s2 - greenBug_s2;
 			if (dGB_s2 > 0)
 				dispatchEvent(new ModelChangedEvent(ModelChangedEvent.GB_ADD_ADULT_EVENT, dGB_s2));
 			else if (dGB_s2 < 0)
 				dispatchEvent(new ModelChangedEvent(ModelChangedEvent.GB_DIE_EVENT, -dGB_s2));
-			}
 			
 			// Predator
 			var dP_s1:int = tmpFuzzPredator_s1 - fuzzPredator_s1;

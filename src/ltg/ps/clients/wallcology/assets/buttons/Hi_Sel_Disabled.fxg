@@ -8,11 +8,6 @@
 			</LinearGradient>
 		</fill>
 	</Path>
-	<Path alpha="0.33" blendMode="multiply" winding="nonZero" d:userLabel="Path Hi" x="2.083" y="0.256" data="M 0 0 L 38.958 0 C 38.958 0 39 8.146 39 12.164 C 39 16.182 39 21 30.621 21 L 0 21 L 0 0 Z">
-		<fill>
-			<SolidColor alpha="0.8" color="#F16843"/>
-		</fill>
-	</Path>
 	<Path alpha="0.6" blendMode="multiply" winding="nonZero" d:id="14" d:userLabel="Path Hi" flm:variant="6" x="2.083" y="0.256" data="M 0 0 L 38.958 0 C 38.958 0 39 8.146 39 12.164 C 39 16.182 39 21 30.621 21 L 0 21 L 0 0 Z">
 		<fill>
 			<LinearGradient rotation="270" scaleX="21" x="19.5" y="21">
@@ -30,6 +25,11 @@
 				<GradientEntry color="#7C7C7C" ratio="0.961206"/>
 				<GradientEntry color="#B0B0B0" ratio="1"/>
 			</LinearGradient>
+		</fill>
+	</Path>
+	<Path alpha="0.65" blendMode="multiply" winding="nonZero" d:userLabel="Path Hi" x="2.083" y="0.256" data="M 0 0 L 38.958 0 C 38.958 0 39 8.146 39 12.164 C 39 16.182 39 21 30.621 21 L 0 21 L 0 0 Z">
+		<fill>
+			<SolidColor alpha="0.8" color="#F16843"/>
 		</fill>
 	</Path>
 	<Group x="12" y="4" d:id="15" flm:knockout="false">

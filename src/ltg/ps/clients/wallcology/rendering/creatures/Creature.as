@@ -146,6 +146,7 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		}
 		
 		private function makeInVisible(event:EffectEvent):void {
+			this.mc.gotoAndStop(0);
 			this.visible = false;
 		}
 		

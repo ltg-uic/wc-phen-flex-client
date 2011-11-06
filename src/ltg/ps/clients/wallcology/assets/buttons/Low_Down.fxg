@@ -1,10 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Graphic xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:fc="http://ns.adobe.com/flashcatalyst/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns="http://ns.adobe.com/fxg/2008" xmlns:flm="http://ns.adobe.com/flame/2008" version="2.0">
-	<Path alpha="0.33" blendMode="multiply" winding="nonZero" d:userLabel="Path Low" x="0.917" y="1.256" data="M 39 0 L 0.042 0 C 0.042 0 0 8.146 0 12.164 C 0 16.182 0 21 8.379 21 L 39 21 L 39 0 Z">
-		<fill>
-			<SolidColor alpha="0.8" color="#44AADF"/>
-		</fill>
-	</Path>
 	<Path alpha="0.6" winding="nonZero" d:id="10" d:userLabel="Path Low" flm:variant="8" x="0.417" y="0.756" data="M 39.5 0.5 L 0.542 0.5 C 0.542 0.5 0.5 8.646 0.5 12.664 C 0.5 16.682 0.5 21.5 8.879 21.5 L 39.5 21.5 L 39.5 0.5 Z">
 		<fill>
 			<LinearGradient rotation="270" scaleX="21" x="20" y="21.5">
@@ -27,9 +22,14 @@
 			<SolidColorStroke caps="none" color="#FFFFFF" joints="miter" miterLimit="4" weight="1"/>
 		</stroke>
 	</Path>
-	<Path alpha="0.47" blendMode="screen" winding="nonZero" x="38.752" y="1.818" data="M 0 0 L 2.331 0 L 2.331 20.926 L 0 20.926 L 0 0 Z">
+	<Path alpha="0.85" blendMode="multiply" winding="nonZero" d:userLabel="Path Low" x="0.917" y="1.256" data="M 39 0 L 0.042 0 C 0.042 0 0 8.146 0 12.164 C 0 16.182 0 21 8.379 21 L 39 21 L 39 0 Z">
 		<fill>
-			<LinearGradient scaleX="7.45435" x="-5.19" y="10.463">
+			<SolidColor alpha="0.8" color="#44AADF"/>
+		</fill>
+	</Path>
+	<Path alpha="0.47" blendMode="screen" winding="nonZero" x="38.752" y="1.818" data="M 0 0 L 2.33 0 L 2.33 20.926 L 0 20.926 L 0 0 Z">
+		<fill>
+			<LinearGradient scaleX="7.45115" x="-5.188" y="10.463">
 				<GradientEntry color="#FFFFFF" ratio="0"/>
 				<GradientEntry ratio="1"/>
 			</LinearGradient>
@@ -39,17 +39,17 @@
 		<Group>
 			<Path winding="nonZero" x="0.773" y="0.296" data="M 0.378 6.624 L 0 6.245 L 0 0.946 C 0.126 0.442 0.441 0.126 0.946 0 L 1.514 1.515 L 1.514 5.488 L 0.378 6.624 Z M 1.514 8.138 L 1.514 12.112 L 0.946 13.626 C 0.441 13.5 0.126 13.185 0 12.68 L 0 7.381 L 0.378 7.003 L 1.514 8.138 Z M 1.893 12.112 L 6.435 12.112 L 7.949 12.68 C 7.822 13.185 7.507 13.5 7.002 13.626 L 1.325 13.626 L 1.893 12.112 Z">
 				<fill>
-					<SolidColor color="#035E7F"/>
+					<SolidColor color="#A9DBF1"/>
 				</fill>
 			</Path>
 			<Path winding="nonZero" x="10.235" y="0.296" data="M 0.378 6.624 L 0 6.245 L 0 1.893 L 0.946 0.946 L 1.514 1.515 L 1.514 5.488 L 0.378 6.624 Z M 1.514 8.138 L 1.514 12.112 L 0.946 12.68 L 0 11.733 L 0 7.381 L 0.378 7.003 L 1.514 8.138 Z M 6.056 1.515 L 1.893 1.515 L 1.136 0.757 L 1.893 0 L 6.056 0 L 6.813 0.757 L 6.056 1.515 Z M 6.813 12.869 L 6.056 13.626 L 1.893 13.626 L 1.136 12.869 L 1.893 12.112 L 6.056 12.112 L 6.813 12.869 Z M 6.435 5.488 L 6.435 1.515 L 7.002 0.946 L 7.949 1.893 L 7.949 6.245 L 7.57 6.624 L 6.435 5.488 Z M 7.57 7.003 L 7.949 7.381 L 7.949 11.733 L 7.002 12.68 L 6.435 12.112 L 6.435 8.138 L 7.57 7.003 Z">
 				<fill>
-					<SolidColor color="#035E7F"/>
+					<SolidColor color="#A9DBF1"/>
 				</fill>
 			</Path>
 			<Path winding="nonZero" x="19.698" y="0.296" data="M 0.378 6.624 L 0 6.245 L 0 0.946 C 0.126 0.442 0.441 0.126 0.946 0 L 1.514 1.515 L 1.514 5.488 L 0.378 6.624 Z M 0 12.302 L 0 7.381 L 0.378 7.003 L 1.514 8.138 L 1.514 11.733 L 0 12.302 Z M 6.624 13.626 L 0.965 13.626 C 0.46 13.5 0.145 13.185 0.019 12.68 L 1.533 12.112 L 6.056 12.112 L 6.624 13.626 Z M 4.731 11.733 L 3.217 11.733 L 3.217 7.381 L 3.974 6.624 L 4.731 7.381 L 4.731 11.733 Z M 6.435 5.488 L 6.435 1.515 L 7.002 0 C 7.507 0.126 7.822 0.442 7.949 0.946 L 7.949 6.245 L 7.57 6.624 L 6.435 5.488 Z M 7.57 7.003 L 7.949 7.381 L 7.949 12.68 C 7.822 13.185 7.507 13.5 7.002 13.626 L 6.435 12.112 L 6.435 8.138 L 7.57 7.003 Z">
 				<fill>
-					<SolidColor color="#035E7F"/>
+					<SolidColor color="#A9DBF1"/>
 				</fill>
 			</Path>
 		</Group>
