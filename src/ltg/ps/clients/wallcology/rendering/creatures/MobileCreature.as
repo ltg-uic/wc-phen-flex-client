@@ -36,14 +36,20 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		public var currentAngle:Number = 0;
 		[Bindable]
 		public var flipped:Boolean = false;
+		[Bindable]
+		public var isZombie:Boolean = false;
 		public var speed:Number;
 		public var actionPath:CreaturePath;
 		
 		
-		public function initializeCreature():void {
+		
+		public function initializeCreature(origin:String):void {
 			assignSpeed();
 			orientateCreature();
-			currentPosition = currentPath.getRandomFirstWaypoint();
+			if (origin == Location.INSIDE_WALLSCOPE)
+				currentPosition = currentPath.getRandomFirstWaypoint();
+			else
+				currentPosition = currentPath.getFirstWaypoint();
 			x = currentPath.actualPath[currentPosition].x;
 			y = currentPath.actualPath[currentPosition].y;
 		}
@@ -60,16 +66,20 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		 * Executed when the walk ends, at the end of the path, outside the screen
 		 */
 		private function reInitializeCreature(event:Event = null):void {
-			dispatchEvent(new NewPathEvent(this));
-			orientateCreature();
-			currentPosition = currentPath.getFirstWaypoint();
-			var fp:Point = getClosestOutWaypoint(currentPath.actualPath[currentPosition]);
-			x = fp.x;
-			y = fp.y;
-			var sequence:Sequence = new Sequence();
-			sequence.addChild(alignToPath(fp,currentPath.actualPath[currentPosition]));
-			sequence.addChild(moveFromTo(fp, currentPath.actualPath[currentPosition]));
-			buildMovement(sequence);
+			if (isZombie) {
+				dispatchEvent(new DisposeCreatureEvent(this));	
+			} else {
+				dispatchEvent(new NewPathEvent(this));
+				orientateCreature();
+				currentPosition = currentPath.getFirstWaypoint();
+				var fp:Point = getClosestOutWaypoint(currentPath.actualPath[currentPosition]);
+				x = fp.x;
+				y = fp.y;
+				var sequence:Sequence = new Sequence();
+				sequence.addChild(alignToPath(fp,currentPath.actualPath[currentPosition]));
+				sequence.addChild(moveFromTo(fp, currentPath.actualPath[currentPosition]));
+				buildMovement(sequence);
+			}
 		}
 		
 		

@@ -9,6 +9,7 @@
 	<!-- ActionScript for events handling & data management-->
 	<fx:Script>
 		<![CDATA[
+			import ltg.ps.clients.wallcology.Wallcology;
 			import ltg.ps.clients.wallcology.model.CreatureType;
 			import ltg.ps.clients.wallcology.model.ModelChangedEvent;
 			import ltg.ps.clients.wallcology.model.WallcologyModel;
@@ -137,7 +138,7 @@
 				wallReady = true;
 				// Add creatures according to positions specified in the file
 				if (wallReady && pipesReady)
-					addCreatures();
+					initCreatures();
 			}
 			
 			
@@ -151,7 +152,7 @@
 				// Add creatures according to positions specified in the file
 				pipesReady = true;
 				if (wallReady && pipesReady)
-					addCreatures();
+					initCreatures();
 			}
 		
 			
@@ -183,15 +184,15 @@
 			/**
 			 * Adds all static and dynamic creatures
 			 */
-			private function addCreatures():void {
+			private function initCreatures():void {
 				initFluffyMold(model.fluffyMold);
 				initGreenScum(model.greenScum);
 				initBlueBugs(model.blueBug_s1, model.blueBug_s2, model.blueBug_s3, model.blueBug_s4);
-				addGreenBugs(model.greenBug_s1, model.greenBug_s2);
-				addFuzzPredator(model.fuzzPredator_s1, model.fuzzPredator_s2);
+				initGreenBugs(model.greenBug_s1, model.greenBug_s2);
+				initFuzzPredator(model.fuzzPredator_s1, model.fuzzPredator_s2);
 				addEventListeners();
-				startMovement();
-				printCreaturesNumbers();
+				if (Wallcology.mode == Wallcology.DEBUG) 
+					printCreaturesNumbers();
 			}
 			
 			
@@ -331,26 +332,10 @@
 				}
 				//------------------- Larvae on pipes AND walls
 				for(i=0;i<blueBug_s2N; i++) {
-					if (i<blueBug_s2N/2)
-						myMC = new BlueBugLarvaPipe() as MovieClip;
+					if (Math.random() < 0.5)
+						addBlueBugLarva(Location.PIPES, Location.INSIDE_WALLSCOPE);
 					else 
-						myMC = new BlueBugLarvaWall() as MovieClip;
-					myUIC = new MobileCreature();
-					myUIC.mc = myMC;
-					myUIC.addChild(myMC);
-					myUIC.type = CreatureType.BB2;
-					myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
-					if (i<blueBug_s2N/2) {
-						pipeDynamic.addElement(myUIC);
-						MobileCreature(myUIC).currentPath = (CreaturePath) (pipesPaths.getRandomDynamicPath("blueBug_s2"));
-						MobileCreature(myUIC).location = Location.PIPES;
-					} else {
-						wallDynamic.addElement(myUIC);
-						MobileCreature(myUIC).currentPath = wallPaths.getRandomDynamicPath("blueBug_s2");
-						MobileCreature(myUIC).location = Location.WALL;
-					}
-					MobileCreature(myUIC).initializeCreature();
-					blueBug_s2s.push(myUIC);
+						addBlueBugLarva(Location.WALL, Location.INSIDE_WALLSCOPE);
 				}
 				//------------------- Pupas on walls
 				wps = wallPaths.getStaticCreatureWaypoints("blueBug_s3");
@@ -370,26 +355,10 @@
 				}
 				//------------------- Adults on pipes AND walls
 				for(i=0;i<blueBug_s4N; i++) {
-					if (i<blueBug_s4N/2)
-						myMC = new BlueBugAdultPipe() as MovieClip;
+					if (Math.random() < 0.5)
+						addBlueBugAdult(Location.PIPES, Location.INSIDE_WALLSCOPE);
 					else 
-						myMC = new BlueBugAdultWall() as MovieClip;
-					myUIC = new MobileCreature();
-					myUIC.mc = myMC;
-					myUIC.addChild(myMC);
-					myUIC.type = CreatureType.BB4;
-					myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
-					if (i<blueBug_s4N/2) {
-						pipeDynamic.addElement(myUIC);
-						MobileCreature(myUIC).currentPath = (CreaturePath) (pipesPaths.getRandomDynamicPath("blueBug_s4"));
-						MobileCreature(myUIC).location = Location.PIPES;
-					} else {
-						wallDynamic.addElement(myUIC);
-						MobileCreature(myUIC).currentPath = wallPaths.getRandomDynamicPath("blueBug_s4");
-						MobileCreature(myUIC).location = Location.WALL;
-					}
-					MobileCreature(myUIC).initializeCreature();
-					blueBug_s4s.push(myUIC);
+						addBlueBugAdult(Location.WALL, Location.INSIDE_WALLSCOPE);
 				}
 			}
 			
@@ -398,7 +367,7 @@
 			/**
 			 * Adds Green bugs
 			 */
-			private function addGreenBugs(greenBug_s1N:int, greenBug_s2N:int):void {
+			private function initGreenBugs(greenBug_s1N:int, greenBug_s2N:int):void {
 				var myMC:MovieClip;
 				var myUIC:Creature;
 				//------------------- Eggs on Walls
@@ -429,7 +398,8 @@
 					wallDynamic.addElement(myUIC);
 					MobileCreature(myUIC).currentPath = (CreaturePath) (wallPaths.getRandomDynamicPath("greenBug_s2"));
 					MobileCreature(myUIC).location = Location.WALL;
-					MobileCreature(myUIC).initializeCreature();
+					MobileCreature(myUIC).initializeCreature(Location.INSIDE_WALLSCOPE);
+					MobileCreature(myUIC).buildMovement();
 					greenBug_s2s.push(myUIC);
 					
 				}
@@ -440,7 +410,7 @@
 			/**
 			 * Adds Predators
 			 */
-			private function addFuzzPredator(fuzzPredator_s1N:int, fuzzPredator_s2N:int):void {
+			private function initFuzzPredator(fuzzPredator_s1N:int, fuzzPredator_s2N:int):void {
 				var myMC:MovieClip;
 				var myUIC:MobileCreature;
 				//------------------- Puppies on Walls
@@ -454,7 +424,8 @@
 					wallDynamic.addElement(myUIC);
 					myUIC.currentPath = wallPaths.getRandomDynamicPath("fuzzPredator_s1");
 					MobileCreature(myUIC).location = Location.WALL;
-					myUIC.initializeCreature();
+					myUIC.initializeCreature(Location.INSIDE_WALLSCOPE);
+					myUIC.buildMovement();
 					fuzzPredator_s1s.push(myUIC);
 				}
 				//------------------- Adults on Walls
@@ -468,43 +439,18 @@
 					wallDynamic.addElement(myUIC);
 					myUIC.currentPath = wallPaths.getRandomDynamicPath("fuzzPredator_s2");
 					MobileCreature(myUIC).location = Location.WALL;
-					myUIC.initializeCreature();
+					myUIC.initializeCreature(Location.INSIDE_WALLSCOPE);
+					myUIC.buildMovement();
 					fuzzPredator_s2s.push(myUIC);
 				}
 			}
 			
 			
 			//==========================================================================//
-			//==== MOVEMENT SECTION STARTS HERE ========================================//
+			//==== MOVEMENT & EVENT HANDLERS SECTIONS STARTS HERE ======================//
 			//==========================================================================//
 			
-			private function startMovement():void {
-				//------------------- Blue Bugs (Larva)
-				for(var i:int=0;i<blueBug_s2s.length;i++) {
-					blueBug_s2s[i].buildMovement();
-				}
-				//------------------- Blue Bugs (Adult)
-				for(i=0;i<blueBug_s4s.length;i++) {
-					blueBug_s4s[i].buildMovement();
-				}
-				
-				//------------------- Green Bugs (Adult)
-				for(i=0;i<greenBug_s2s.length;i++) {
-					greenBug_s2s[i].buildMovement();
-				}
-				
-				//------------------- Predator (Puppy)
-				for(i=0;i<fuzzPredator_s1s.length;i++) {
-					fuzzPredator_s1s[i].buildMovement();
-				}
-				//------------------- Predator (Adult)
-				for(i=0;i<fuzzPredator_s2s.length;i++) {
-					fuzzPredator_s2s[i].buildMovement();
-				}
-			}
-			
-			
-			private function assignNewPathHandler(event:NewPathEvent):void {
+			protected function assignNewPathHandler(event:NewPathEvent):void {
 				if (event.origin.type==CreatureType.BB2) {
 					if (event.origin.location==Location.PIPES)
 						event.origin.currentPath = (CreaturePath) (pipesPaths.getRandomDynamicPath("blueBug_s2"));
@@ -530,12 +476,9 @@
 			}
 			
 			
-			//==========================================================================//
-			//==== EVENT HANDLERS SECTION STARTS HERE ==================================//
-			//==========================================================================//
-			
 			protected function addEventListeners():void {
-				model.addEventListener(ModelChangedEvent.MODEL_CHANGED_EVENT, printCreaturesNumbers);
+				if (Wallcology.mode == Wallcology.DEBUG)
+					model.addEventListener(ModelChangedEvent.MODEL_CHANGED_EVENT, printCreaturesNumbers);
 				// Scum
 				model.addEventListener(ModelChangedEvent.SCUM_GEN_EVENT, addScumHandler);
 				model.addEventListener(ModelChangedEvent.SCUM_EAT_EVENT, eatScumHandler);
@@ -545,8 +488,8 @@
 				// Scum eaters (blue bugs)
 				model.addEventListener(ModelChangedEvent.BB_LAYEGG_EVENT, layBlueBugEggHandler);
 				model.addEventListener(ModelChangedEvent.BB_HATCH_EVENT, hatchBlueBugEggHandler);
-				//model.addEventListener(ModelChangedEvent.BB_ADD_LARVA_EVENT, addBlueBugLarvaHandler);
-				//model.addEventListener(ModelChangedEvent.BB_KILL_LARVA_EVENT, killBlueBugLarva);
+				model.addEventListener(ModelChangedEvent.BB_ADD_LARVA_EVENT, addBlueBugLarvaHandler);
+				model.addEventListener(ModelChangedEvent.BB_KILL_LARVA_EVENT, killBlueBugLarvaHandler);
 				model.addEventListener(ModelChangedEvent.BB_PUPATE_EVENT, pupateBlueBugHandler);
 				model.addEventListener(ModelChangedEvent.BB_SPLIT_EVENT, splitBlueBugCocoon);
 				//model.addEventListener(ModelChangedEvent.BB_ADD_ADULT_EVENT, addBlueBugAdultHandler);
@@ -582,7 +525,8 @@
 			
 			
 			protected function addScumHandler(event:ModelChangedEvent):void {
-				trace("dScum= " + event.quantity);
+				if (Wallcology.mode == Wallcology.DEBUG)
+					trace("dScum= " + event.quantity);
 				for(var i:int=0; i< event.quantity; i++) {	
 					var c:Creature;
 					if (wallHasRoomForScum() && pipesHaveRoomForScum()) {
@@ -637,7 +581,8 @@
 			
 			
 			protected function eatScumHandler(event:ModelChangedEvent):void {
-				trace("dScum= " + -event.quantity);
+				if (Wallcology.mode == Wallcology.DEBUG)
+					trace("dScum= " + -event.quantity);
 				for(var i:int=0; i< event.quantity; i++) {
 					var ri:int;
 					var pred:MobileCreature;
@@ -723,7 +668,8 @@
 			//------------------- FUZZ
 			
 			protected function addFuzzHandler(event:ModelChangedEvent):void {
-				trace("dFuzz= " + event.quantity);
+				if (Wallcology.mode == Wallcology.DEBUG)
+					trace("dFuzz= " + event.quantity);
 				for(var i:int=0; i< event.quantity; i++) {
 					var c:Creature;
 					try {
@@ -744,7 +690,8 @@
 			 * green bugs) are more likey to eat it with a ration of 30:70
 			 */
 			protected function eatFuzzHandler(event:ModelChangedEvent):void {
-				trace("dFuzz= " + -event.quantity);
+				if (Wallcology.mode == Wallcology.DEBUG)
+					trace("dFuzz= " + -event.quantity);
 				for(var i:int=0; i<event.quantity; i++) {
 					if(Math.random() >= 0.3) {
 						// Fuzz eaters (green bugs) eats fuzz
@@ -813,13 +760,20 @@
 			
 			
 			protected function addBlueBugLarvaHandler(event:ModelChangedEvent):void {
-				trace("Generating " + event.quantity + " blue bug larva");
-				//TODO
+				for(var i:int=0; i<event.quantity; i++) {
+					if (Math.random()<0.5)
+						addBlueBugLarva(Location.PIPES, Location.OUTSIDE_WALLSCOPE);
+					else 
+						addBlueBugLarva(Location.WALL, Location.OUTSIDE_WALLSCOPE);
+				}
 			}
 			
-			protected function killBlueBugLarva(event:ModelChangedEvent):void {
-				trace("Killing " + event.quantity + " blue bug larva");
-				//TODO
+			
+			protected function killBlueBugLarvaHandler(event:ModelChangedEvent):void {
+				for(var i:int=0; i<event.quantity; i++) {
+					var c:MobileCreature = blueBug_s2s.pop();
+					c.isZombie = true;
+				}
 			}
 			
 			
@@ -959,6 +913,65 @@
 			//==========================================================================//
 			//==== UTILITIES SECTION STARTS HERE =======================================//
 			//==========================================================================//
+			
+			
+			private function addBlueBugLarva(location:String, origin:String):void {
+				var myMC:MovieClip;
+				var myUIC:Creature;
+				if (location==Location.PIPES)
+					myMC = new BlueBugLarvaPipe() as MovieClip;
+				else 
+					myMC = new BlueBugLarvaWall() as MovieClip;
+				myUIC = new MobileCreature();
+				myUIC.mc = myMC;
+				myUIC.addChild(myMC);
+				myUIC.type = CreatureType.BB2;
+				myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
+				myUIC.addEventListener(DisposeCreatureEvent.DISPOSE_CREATURE_EVENT, disposeCreatureHandler);
+				MobileCreature(myUIC).location = location;
+				if (location==Location.PIPES) {
+					pipeDynamic.addElement(myUIC);
+					MobileCreature(myUIC).currentPath = (CreaturePath) (pipesPaths.getRandomDynamicPath("blueBug_s2"));
+				} else {
+					wallDynamic.addElement(myUIC);
+					MobileCreature(myUIC).currentPath = wallPaths.getRandomDynamicPath("blueBug_s2");
+				}
+				MobileCreature(myUIC).initializeCreature(origin);
+				MobileCreature(myUIC).buildMovement();
+				blueBug_s2s.push(myUIC);
+			}
+			
+			
+			private function removeBlueBugLarva(location:String):void {
+				
+			}
+			
+			
+			private function addBlueBugAdult(location:String, origin:String):void {
+				var myMC:MovieClip;
+				var myUIC:Creature;
+				if (location==Location.PIPES)
+					myMC = new BlueBugAdultPipe() as MovieClip;
+				else 
+					myMC = new BlueBugAdultWall() as MovieClip;
+				myUIC = new MobileCreature();
+				myUIC.mc = myMC;
+				myUIC.addChild(myMC);
+				myUIC.type = CreatureType.BB4;
+				myUIC.addEventListener(NewPathEvent.NEW_PATH_EVENT, assignNewPathHandler);
+				myUIC.addEventListener(DisposeCreatureEvent.DISPOSE_CREATURE_EVENT, disposeCreatureHandler);
+				MobileCreature(myUIC).location = location;
+				if (location==Location.PIPES) {
+					pipeDynamic.addElement(myUIC);
+					MobileCreature(myUIC).currentPath = (CreaturePath) (pipesPaths.getRandomDynamicPath("blueBug_s4"));
+				} else {
+					wallDynamic.addElement(myUIC);
+					MobileCreature(myUIC).currentPath = wallPaths.getRandomDynamicPath("blueBug_s4");
+				}
+				MobileCreature(myUIC).initializeCreature(origin);
+				MobileCreature(myUIC).buildMovement();
+				blueBug_s4s.push(myUIC);
+			}
 			
 			
 			private function getRandomStaticCreature(a:Array, v:Boolean):Creature {
@@ -1146,7 +1159,7 @@
 					pipeDynamic.addElement(myUIC);
 					MobileCreature(myUIC).currentPath = path;
 					MobileCreature(myUIC).location = Location.PIPES;
-					myUIC.initializeCreature();
+					myUIC.initializeCreature(Location.INSIDE_WALLSCOPE);
 					myUIC.x = xc;
 					myUIC.y = yc;
 				} else {
