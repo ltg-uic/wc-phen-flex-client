@@ -22,8 +22,8 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		public static const  BLUE_BUG_S2_SPEED:Number  	= 13;
 		public static const  BLUE_BUG_S4_SPEED:Number  	= 13;
 		public static const  GREEN_BUG_S2_SPEED:Number  = 15;
-		public static const  PREDATOR_S1_SPEED:Number  	= 17;
-		public static const  PREDATOR_S2_SPEED:Number  	= 17;
+		public static const  PREDATOR_S1_SPEED:Number  	= 16;
+		public static const  PREDATOR_S2_SPEED:Number  	= 18;
 		
 		public static const  FEED_SPEED:Number = 10000;
 		public static const  PUPATING_SPEED:Number = 20000;
@@ -48,7 +48,7 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 			orientateCreature();
 			if (origin == Location.INSIDE_WALLSCOPE)
 				currentPosition = currentPath.getRandomFirstWaypoint();
-			else
+			else if (origin == Location.OUTSIDE_WALLSCOPE)
 				currentPosition = currentPath.getFirstWaypoint();
 			x = currentPath.actualPath[currentPosition].x;
 			y = currentPath.actualPath[currentPosition].y;
