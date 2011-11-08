@@ -110,7 +110,7 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		}
 		
 		
-		private function buildEatWallVegetationAnimation():void {
+		private function buildEatWallSaticCreatureAnimation():void {
 			var seq1:Sequence = new Sequence();
 			var np:Point = new Point(actionTarget.x, actionTarget.y);
 			var cp:Point = new Point(x, y);
@@ -366,7 +366,6 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		}
 		
 		
-		
 		public function playWalking(event:EffectEvent):void {
 			mc.play();
 		}
@@ -428,13 +427,13 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		
 		public function eatFuzz(target:Creature):void {
 			actionTarget = target;
-			buildEatWallVegetationAnimation();
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		
 		public function eatScum(target:Creature):void {
 			actionTarget = target;
-			buildEatWallVegetationAnimation();
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		
@@ -461,6 +460,18 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		public function layGreenBugEgg(target:Creature):void {
 			actionTarget = target;
 			buildGreenBugLayEggAnimation();
+		}
+		
+		
+		public function eatGreenBugEgg(target:Creature):void {
+			actionTarget = target;
+			buildEatWallSaticCreatureAnimation();
+		}
+		
+		
+		public function eatBlueBugPupa(target:Creature):void {
+			actionTarget = target;
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		
