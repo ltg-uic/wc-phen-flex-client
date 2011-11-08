@@ -22,8 +22,8 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		public static const  BLUE_BUG_S2_SPEED:Number  	= 13;
 		public static const  BLUE_BUG_S4_SPEED:Number  	= 13;
 		public static const  GREEN_BUG_S2_SPEED:Number  = 15;
-		public static const  PREDATOR_S1_SPEED:Number  	= 17;
-		public static const  PREDATOR_S2_SPEED:Number  	= 17;
+		public static const  PREDATOR_S1_SPEED:Number  	= 16;
+		public static const  PREDATOR_S2_SPEED:Number  	= 18;
 		
 		public static const  FEED_SPEED:Number = 10000;
 		public static const  PUPATING_SPEED:Number = 20000;
@@ -48,7 +48,7 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 			orientateCreature();
 			if (origin == Location.INSIDE_WALLSCOPE)
 				currentPosition = currentPath.getRandomFirstWaypoint();
-			else
+			else if (origin == Location.OUTSIDE_WALLSCOPE)
 				currentPosition = currentPath.getFirstWaypoint();
 			x = currentPath.actualPath[currentPosition].x;
 			y = currentPath.actualPath[currentPosition].y;
@@ -110,7 +110,7 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		}
 		
 		
-		private function buildEatWallVegetationAnimation():void {
+		private function buildEatWallSaticCreatureAnimation():void {
 			var seq1:Sequence = new Sequence();
 			var np:Point = new Point(actionTarget.x, actionTarget.y);
 			var cp:Point = new Point(x, y);
@@ -366,7 +366,6 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		}
 		
 		
-		
 		public function playWalking(event:EffectEvent):void {
 			mc.play();
 		}
@@ -428,13 +427,13 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		
 		public function eatFuzz(target:Creature):void {
 			actionTarget = target;
-			buildEatWallVegetationAnimation();
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		
 		public function eatScum(target:Creature):void {
 			actionTarget = target;
-			buildEatWallVegetationAnimation();
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		
@@ -461,6 +460,18 @@ package ltg.ps.clients.wallcology.rendering.creatures {
 		public function layGreenBugEgg(target:Creature):void {
 			actionTarget = target;
 			buildGreenBugLayEggAnimation();
+		}
+		
+		
+		public function eatGreenBugEgg(target:Creature):void {
+			actionTarget = target;
+			buildEatWallSaticCreatureAnimation();
+		}
+		
+		
+		public function eatBlueBugPupa(target:Creature):void {
+			actionTarget = target;
+			buildEatWallSaticCreatureAnimation();
 		}
 		
 		

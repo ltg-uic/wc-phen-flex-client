@@ -44,8 +44,8 @@
 			public static	const DEBUG:String = "DEBUG";
 			public static	const RELEASE:String = "RELEASE";
 			// Mode
-//			public static 	var mode:String = DEBUG;
-			public static 	var mode:String = RELEASE;
+			public static 	var mode:String = DEBUG;
+//			public static 	var mode:String = RELEASE;
 			
 			// Side panels
 			[Bindable]
@@ -158,13 +158,14 @@
 				if (mode=="DEBUG") {
 					serverHost = "ltg.evl.uic.edu";
 					
-					username = "wc1_w1@ltg.evl.uic.edu";
-					password = "wc1_w1";
-					phenomenaId = "wc1@ltg.evl.uic.edu";
+//					username = "wc1_w1@ltg.evl.uic.edu";
+//					password = "wc1_w1";
+//					phenomenaId = "wc1@ltg.evl.uic.edu";
 					
-//					username = "hr_dev_w1@ltg.evl.uic.edu";
-//					password = "hr_dev_w1";
-//					phenomenaId = "hr_dev@ltg.evl.uic.edu";
+					// Development connection parameters
+					username = "hr_dev_w1@ltg.evl.uic.edu";
+					password = "hr_dev_w1";
+					phenomenaId = "hr_dev@ltg.evl.uic.edu";
 				}
 				return new XMPPController(serverHost, username, password, resource, phenomenaId);
 			}
