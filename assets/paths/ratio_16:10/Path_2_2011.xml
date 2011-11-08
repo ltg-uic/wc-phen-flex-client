@@ -433,4 +433,41 @@
 		<waypoint x="43" y="539" /> 
 		<waypoint x="3" y="524" /> 
 	</path>
+	<path creatures="fuzzPredator_s1,fuzzPredator_s2" action="move">
+		<waypoint x="1673" y="95" /> 
+		<waypoint x="1613" y="153" /> 
+		<waypoint x="1508" y="181" /> 
+		<waypoint x="1280" y="168" /> 
+		<waypoint x="1152" y="140" /> 
+		<waypoint x="990" y="120" /> 
+		<waypoint x="957" y="165" /> 
+		<waypoint x="962" y="255" /> 
+		<waypoint x="1045" y="380" /> 
+		<waypoint x="1197" y="475" /> 
+		<waypoint x="1287" y="500" /> 
+		<waypoint x="1350" y="598" /> 
+		<waypoint x="1309" y="704" /> 
+		<waypoint x="1173" y="619" /> 
+		<waypoint x="1117" y="618" /> 
+		<waypoint x="1073" y="662" /> 
+		<waypoint x="1072" y="835" /> 
+		<waypoint x="1237" y="888" /> 
+		<waypoint x="1296" y="961" /> 
+		<waypoint x="1323" y="1048" /> 
+	</path>
+	<path creatures="fuzzPredator_s1,fuzzPredator_s2" action="move">
+		<waypoint x="340" y="6" /> 
+		<waypoint x="544" y="220" /> 
+		<waypoint x="580" y="339" /> 
+		<waypoint x="565" y="428" /> 
+		<waypoint x="436" y="431" /> 
+		<waypoint x="362" y="488" /> 
+		<waypoint x="478" y="589" /> 
+		<waypoint x="689" y="589" /> 
+		<waypoint x="797" y="493" /> 
+		<waypoint x="899" y="263" /> 
+		<waypoint x="920" y="160" /> 
+		<waypoint x="956" y="36" /> 
+		<waypoint x="1021" y="6" />  
+	</path>
 </pipes>
